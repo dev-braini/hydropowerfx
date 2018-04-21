@@ -1,7 +1,8 @@
 # OOP2 Programmierprojekt 2Ibb/2iCbb FS18
 
 ## Bearbeitet von
- - Vorname Nachname
+ - Marco Peter
+ - Markus Winter
 
 ## Abgabe
 - Mittwoch, 6.6.2018, 18:00 Uhr
