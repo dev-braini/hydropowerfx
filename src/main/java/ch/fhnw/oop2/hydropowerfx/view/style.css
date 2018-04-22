@@ -1,3 +1,33 @@
 .root {
-    -fx-padding: 20px;
+    -fx-pref-width: 1600px;
+    -fx-pref-height: 900px;
+}
+
+#navigation {
+    -fx-background-color: #5086d8;
+    //-fx-border-color: black;
+    -fx-pref-height: 120px;
+}
+
+#root-vbox {
+
+}
+
+#content-split-pane-vertical {
+}
+
+#content-split-pane-horizontal {
+
+}
+
+#main-content-left {
+    -fx-background-color: purple;
+}
+
+#main-content-right {
+    -fx-background-color: red;
+}
+
+#footer {
+    -fx-background-color: green;
 }
