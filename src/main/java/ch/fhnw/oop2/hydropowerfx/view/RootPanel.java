@@ -1,7 +1,10 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.FileReader;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import ch.fhnw.oop2.hydropowerfx.model.PowerStation;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Orientation;
@@ -22,11 +25,11 @@ public class RootPanel extends StackPane implements ViewMixin {
     private StackPane mainContentLeft;
     private StackPane mainContentRight;
 
-    private TableView powerStationTable;
-    private TableColumn<Object, Object> powerStationTable_Col0;
-    private TableColumn<Object, Object> powerStationTable_Col1;
-    private TableColumn<Object, Object> powerStationTable_Col2;
-    private TableColumn<Object, Object> powerStationTable_Col3;
+    private TableView<PowerStation> powerStationTable;
+    private TableColumn<PowerStation, String> powerStationTable_Col0;
+    private TableColumn<PowerStation, String> powerStationTable_Col1;
+    private TableColumn<PowerStation, Double> powerStationTable_Col2;
+    private TableColumn<PowerStation, Integer> powerStationTable_Col3;
 
     private StackPane footer;
 
@@ -85,9 +88,9 @@ public class RootPanel extends StackPane implements ViewMixin {
         //power station table
         powerStationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         powerStationTable_Col0.setText("Name");
-        powerStationTable_Col1.setText("");                powerStationTable_Col1.setMinWidth(60);  powerStationTable_Col1.setMaxWidth(60);
-        powerStationTable_Col2.setText("Leistung (MW)");   powerStationTable_Col2.setMinWidth(120); powerStationTable_Col2.setMaxWidth(120);
-        powerStationTable_Col3.setText("Inbetriebnahme");  powerStationTable_Col3.setMinWidth(120); powerStationTable_Col3.setMaxWidth(120);
+        powerStationTable_Col1.setText("");                powerStationTable_Col1.setMinWidth(26);  powerStationTable_Col1.setMaxWidth(60);
+        powerStationTable_Col2.setText("Leistung (MW)");   powerStationTable_Col2.setMinWidth(120); powerStationTable_Col2.setMaxWidth(120); powerStationTable_Col2.setStyle( "-fx-alignment: CENTER-RIGHT;");
+        powerStationTable_Col3.setText("Inbetriebnahme");  powerStationTable_Col3.setMinWidth(120); powerStationTable_Col3.setMaxWidth(120); powerStationTable_Col3.setStyle( "-fx-alignment: CENTER-RIGHT;");
         powerStationTable.getColumns().addAll(
                 powerStationTable_Col0,
                 powerStationTable_Col1,
@@ -119,11 +122,32 @@ public class RootPanel extends StackPane implements ViewMixin {
     public void setupBindings() {
         //button.textProperty().bind(rootPM.greetingProperty());
 
+        powerStationTable_Col0.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        powerStationTable_Col1.setCellValueFactory(new PropertyValueFactory<>("canton"));
+        powerStationTable_Col1.setCellFactory(tc -> {
+            TableCell<PowerStation, String> cell = new TableCell<PowerStation, String>() {
+                private ImageView imageView = new ImageView();
 
+                @Override
+                protected void updateItem(String canton, boolean empty) {
+                    super.updateItem(canton, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        imageView.setImage(new Image("file:///" + System.getProperty("user.dir") + "/src/main/resources/images/canton/" + canton + ".png"));
+                        imageView.setPreserveRatio(true);
+                        imageView.setFitHeight(24);
+                        setGraphic(imageView);
+                    }
+                }
+            };
+            return cell;
+        });
+        powerStationTable_Col2.setCellValueFactory(cellData -> cellData.getValue().performanceProperty().asObject());
+        powerStationTable_Col3.setCellValueFactory(cellData -> cellData.getValue().firstCommissioningProperty().asObject());
 
-        FileReader fileReader = new FileReader();
-        //fileReader.readFile("C:/Users/braini/Dropbox/FHNW/Semester2/oop2/repos/hydropowerfx-fs18-markusFHNW/src/main/resources/data/cantons.csv");
-        fileReader.readFromFile("/src/main/resources/data/cantons.csv");
+        powerStationTable.setItems(this.rootPM.getPowerStationList());
+
 
     }
 }
