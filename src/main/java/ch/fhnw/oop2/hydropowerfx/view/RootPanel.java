@@ -87,10 +87,12 @@ public class RootPanel extends StackPane implements ViewMixin {
 
         //power station table
         powerStationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        powerStationTable_Col0.setText("Name");
-        powerStationTable_Col1.setText("");                powerStationTable_Col1.setMinWidth(26);  powerStationTable_Col1.setMaxWidth(60);
-        powerStationTable_Col2.setText("Leistung (MW)");   powerStationTable_Col2.setMinWidth(120); powerStationTable_Col2.setMaxWidth(120); powerStationTable_Col2.setStyle( "-fx-alignment: CENTER-RIGHT;");
-        powerStationTable_Col3.setText("Inbetriebnahme");  powerStationTable_Col3.setMinWidth(120); powerStationTable_Col3.setMaxWidth(120); powerStationTable_Col3.setStyle( "-fx-alignment: CENTER-RIGHT;");
+        powerStationTable_Col0.setText("Name");            powerStationTable_Col0.getStyleClass().add("col-name"); powerStationTable_Col0.setMinWidth(140);
+        powerStationTable_Col1.setText("");                powerStationTable_Col1.getStyleClass().add("col-canton"); powerStationTable_Col1.setMinWidth(38); powerStationTable_Col1.setMaxWidth(38); powerStationTable_Col1.setResizable(false);
+
+        powerStationTable_Col2.setText("Leistung (MW)");   powerStationTable_Col2.getStyleClass().add("col-performance");  powerStationTable_Col2.setMinWidth(140); powerStationTable_Col2.setMaxWidth(140); powerStationTable_Col2.setResizable(false);
+        powerStationTable_Col3.setText("Inbetriebnahme");  powerStationTable_Col3.getStyleClass().add("col-first-commissioning");  powerStationTable_Col3.setMinWidth(140); powerStationTable_Col3.setMaxWidth(140); powerStationTable_Col3.setResizable(false);
+        powerStationTable.setId("power-station-table");
         powerStationTable.getColumns().addAll(
                 powerStationTable_Col0,
                 powerStationTable_Col1,

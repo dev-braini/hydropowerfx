@@ -13,6 +13,55 @@
 
 }
 
+#power-station-table {
+
+}
+
+.table-view .column-header {
+    -fx-background-color: white;
+}
+
+#power-station-table .table-row-cell {
+    -fx-border-width: 0;
+    -fx-table-cell-border-color: transparent;
+}
+
+#power-station-table .table-column {
+    -fx-padding: 9 7 5 7;
+}
+
+#power-station-table .table-row-cell{
+}
+
+#power-station-table .table-row-cell:odd{
+    -fx-background-color: transparent;
+}
+
+#power-station-table .table-row-cell:selected {
+    -fx-background-color: #5086d8;
+}
+
+
+#power-station-table .column-header.col-name > .label {
+    -fx-alignment: center-left;
+}
+#power-station-table .col-name {
+    -fx-alignment: center-left;
+}
+
+#power-station-table .col-canton {
+    -fx-padding: 7;
+}
+
+#power-station-table .col-performance {
+    -fx-alignment: center-right;
+}
+
+
+#power-station-table .col-first-commissioning {
+    -fx-alignment: center-right;
+}
+
 #content-split-pane-vertical {
     //-fx-orientation: vertical;
 }
