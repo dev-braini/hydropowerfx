@@ -312,7 +312,7 @@ public class RootPanel extends StackPane implements ViewMixin {
         Node oldView = contentSplitPaneHorizontal.getItems().get(1);
 
         if((fadeTransitionOld == null || (fadeTransitionOld.getStatus() != Animation.Status.RUNNING && fadeTransitionNew.getStatus() != Animation.Status.RUNNING)) && oldView != newView) {
-            Duration fadeDuration = Duration.millis(750);
+            Duration fadeDuration = Duration.millis(700);
             newView.setOpacity(0);
 
             //fade out old view

@@ -19,6 +19,8 @@ public class HydroPowerApp extends Application {
 
 		primaryStage.titleProperty().bind(rootPM.applicationTitleProperty());
 		primaryStage.setScene(scene);
+		primaryStage.setMinWidth(1024);
+		primaryStage.setMinHeight(768);
 
 		primaryStage.show();
 	}
