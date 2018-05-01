@@ -17,7 +17,7 @@
 
 }
 
-.table-view .column-header {
+#power-station-table.table-view .column-header {
     -fx-background-color: white;
 }
 
@@ -60,6 +60,15 @@
 
 #power-station-table .col-first-commissioning {
     -fx-alignment: center-right;
+}
+
+#power-station-table.table-view > .virtual-flow > .scroll-bar:vertical,
+#power-station-table.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+#power-station-table.table-view > .virtual-flow > .scroll-bar:vertical > .track-background,
+#power-station-table.table-view > .virtual-flow > .scroll-bar:horizontal,
+#power-station-table.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+#power-station-table.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
 }
 
 #content-split-pane-vertical {

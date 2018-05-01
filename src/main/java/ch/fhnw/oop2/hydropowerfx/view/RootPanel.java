@@ -2,12 +2,18 @@ package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.model.PowerStation;
+
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Orientation;
+import javafx.util.Duration;
 
 /*
  * @author: Marco Peter & Markus Winter
@@ -23,13 +29,23 @@ public class RootPanel extends StackPane implements ViewMixin {
     private SplitPane contentSplitPaneHorizontal;
 
     private StackPane mainContentLeft;
-    private StackPane mainContentRight;
+    private StackPane mainContentRight_Text;
+    private StackPane mainContentRight_Map;
+    private StackPane mainContentRight_Grouped;
+    private StackPane mainContentRight_Time;
+    private FadeTransition fadeTransitionOld;
+    private FadeTransition fadeTransitionNew;
 
     private TableView<PowerStation> powerStationTable;
     private TableColumn<PowerStation, String> powerStationTable_Col0;
     private TableColumn<PowerStation, String> powerStationTable_Col1;
     private TableColumn<PowerStation, Double> powerStationTable_Col2;
     private TableColumn<PowerStation, Integer> powerStationTable_Col3;
+
+    private Button ButtonNav_ViewText;
+    private Button ButtonNav_ViewMap;
+    private Button ButtonNav_ViewGrouped;
+    private Button ButtonNav_ViewTime;
 
     private StackPane footer;
 
@@ -55,13 +71,24 @@ public class RootPanel extends StackPane implements ViewMixin {
         contentSplitPaneHorizontal = new SplitPane();
 
         mainContentLeft = new StackPane();
-        mainContentRight = new StackPane();
+        mainContentRight_Text = new StackPane();
+        mainContentRight_Map = new StackPane();
+        mainContentRight_Grouped = new StackPane();
+        mainContentRight_Time = new StackPane();
 
         powerStationTable = new TableView();
         powerStationTable_Col0 = new TableColumn<>();
         powerStationTable_Col1 = new TableColumn<>();
         powerStationTable_Col2 = new TableColumn<>();
         powerStationTable_Col3 = new TableColumn<>();
+
+        ButtonNav_ViewText = new Button("TEXT");
+        ButtonNav_ViewText.setOnAction(e -> {
+
+        });
+        ButtonNav_ViewMap = new Button("MAP");
+        ButtonNav_ViewGrouped = new Button("GROUPED");
+        ButtonNav_ViewTime = new Button("TIME");
 
         footer = new StackPane();
     }
@@ -70,7 +97,25 @@ public class RootPanel extends StackPane implements ViewMixin {
     public void layoutControls() {
         //navigation
         navigation.setId("navigation");
-        navigation.getChildren().add(new Button("#navigation"));
+        navigation.setAlignment(Pos.CENTER);
+        ButtonNav_ViewText.setOnAction(e -> {
+            animateChangeView(mainContentRight_Text);
+        });
+        ButtonNav_ViewMap.setOnAction(e -> {
+            animateChangeView(mainContentRight_Map);
+        });
+        ButtonNav_ViewGrouped.setOnAction(e -> {
+            animateChangeView(mainContentRight_Grouped);
+        });
+        ButtonNav_ViewTime.setOnAction(e -> {
+            animateChangeView(mainContentRight_Time);
+        });
+        navigation.getChildren().addAll(
+                ButtonNav_ViewText,
+                ButtonNav_ViewMap,
+                ButtonNav_ViewGrouped,
+                ButtonNav_ViewTime
+        );
 
         //content wrapper
         contentSplitPaneVertical.setId("#content-split-pane-vertical");
@@ -82,8 +127,8 @@ public class RootPanel extends StackPane implements ViewMixin {
 
         contentSplitPaneVertical.setId("#content-split-pane-horizontal");
         contentSplitPaneHorizontal.setOrientation(Orientation.HORIZONTAL);
-        contentSplitPaneHorizontal.setDividerPositions(0.3f);
-        contentSplitPaneHorizontal.getItems().addAll(mainContentLeft, mainContentRight);
+        contentSplitPaneHorizontal.setDividerPositions(0.32f);
+        contentSplitPaneHorizontal.getItems().addAll(mainContentLeft, mainContentRight_Text);
 
         //power station table
         powerStationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -104,8 +149,17 @@ public class RootPanel extends StackPane implements ViewMixin {
         mainContentLeft.setId("main-content-left");
         mainContentLeft.getChildren().add(powerStationTable);
 
-        mainContentRight.setId("main-content-right");
-        mainContentRight.getChildren().add(new Button("#main-content-right"));
+        mainContentRight_Text.setId("main-content-right");
+        mainContentRight_Text.getChildren().add(new Button("mainContentRight_Text"));
+
+        mainContentRight_Map.setId("main-content-right");
+        mainContentRight_Map.getChildren().add(new Button("mainContentRight_Map"));
+
+        mainContentRight_Grouped.setId("main-content-right");
+        mainContentRight_Grouped.getChildren().add(new Button("mainContentRight_Grouped"));
+
+        mainContentRight_Time.setId("main-content-right");
+        mainContentRight_Time.getChildren().add(new Button("mainContentRight_Time"));
 
         //footer
         footer.setId("footer");
@@ -151,5 +205,25 @@ public class RootPanel extends StackPane implements ViewMixin {
         powerStationTable.setItems(this.rootPM.getPowerStationList());
 
 
+    }
+
+    private void animateChangeView(StackPane newView) {
+        if(fadeTransitionOld == null || fadeTransitionOld.getStatus() != Animation.Status.RUNNING) {
+            Node oldView = contentSplitPaneHorizontal.getItems().get(1);
+            newView.setOpacity(0);
+
+            fadeTransitionOld = new FadeTransition(Duration.millis(777), oldView);
+            fadeTransitionOld.setFromValue(1); fadeTransitionOld.setToValue(0);
+            fadeTransitionOld.play();
+            fadeTransitionOld.setOnFinished(event -> {
+                contentSplitPaneHorizontal.getItems().remove(oldView);
+                contentSplitPaneHorizontal.setDividerPositions(0.32f);
+                contentSplitPaneHorizontal.getItems().add(newView);
+
+                fadeTransitionNew = new FadeTransition(Duration.millis(777), newView);
+                fadeTransitionNew.setFromValue(0); fadeTransitionNew.setToValue(1);
+                fadeTransitionNew.play();
+            });
+        }
     }
 }
