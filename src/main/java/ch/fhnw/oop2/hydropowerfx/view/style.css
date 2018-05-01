@@ -6,11 +6,45 @@
 #navigation {
     -fx-background-color: #5086d8;
     //-fx-border-color: black;
-    -fx-pref-height: 120px;
+    -fx-pref-height: 122px;
+    -fx-padding: 15 0 15 0;
 }
 
-#root-vbox {
+#navigation-left {
 
+}
+
+#navigation-right {
+
+}
+
+
+#root-vbox {
+}
+
+#navigation .label {
+    -fx-font-size: 14pt;
+    -fx-text-fill: white;
+    -fx-opacity: 0.8;
+    -fx-padding: 0 15 0 151;
+}
+
+#navigation .toggle-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.38;
+    -fx-cursor: hand;
+    -fx-padding: 0 15 0 15;
+}
+
+#navigation .toggle-button:hover, .toggle-button:selected, .toggle-button:armed {
+    -fx-opacity: 0.8;
+}
+
+#navigation .toggle-button:selected, .toggle-button:armed {
+    -fx-opacity: 1;
+}
+
+#navigation .toggle-button:focused, .toggle-button:visited {
 }
 
 #power-station-table {
@@ -84,9 +118,23 @@
     -fx-background-color: purple;
 }
 
-#main-content-right {
-    -fx-background-color: red;
+#main-content-right-text {
+    -fx-background-color: #ffce00;
 }
+
+#main-content-right-map {
+    -fx-background-color: #ff9a00;
+}
+
+#main-content-right-grouped {
+    -fx-background-color: #ff5a00;
+}
+
+#main-content-right-time {
+    -fx-background-color: #ff5a00;
+}
+
+
 
 #footer {
     -fx-background-color: green;
