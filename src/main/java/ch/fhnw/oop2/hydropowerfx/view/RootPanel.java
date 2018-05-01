@@ -54,9 +54,11 @@ public class RootPanel extends StackPane implements ViewMixin {
 
     @Override
     public void layoutControls() {
+        //navigation
         navigation.setId("navigation");
         navigation.getChildren().add(new Button("#navigation"));
 
+        //content wraüüer
         contentSplitPaneVertical.setId("#content-split-pane-vertical");
         contentSplitPaneVertical.setOrientation(Orientation.VERTICAL);
         contentSplitPaneVertical.prefWidthProperty().bind(this.widthProperty());
@@ -69,17 +71,22 @@ public class RootPanel extends StackPane implements ViewMixin {
         contentSplitPaneHorizontal.setDividerPositions(0.3f);
         contentSplitPaneHorizontal.getItems().addAll(mainContentLeft, mainContentRight);
 
+        //main content
         mainContentLeft.setId("main-content-left");
         mainContentLeft.getChildren().add(new Button("#main-content-left"));
+
         mainContentRight.setId("main-content-right");
         mainContentRight.getChildren().add(new Button("#main-content-right"));
 
+        //footer
         footer.setId("footer");
         footer.getChildren().add(new Button("footer"));
 
+        //root wrapper
         rootVBox.setId("root-vbox");
         rootVBox.getChildren().add(0, navigation);
         rootVBox.getChildren().add(1, contentSplitPaneVertical);
+
 
         this.getChildren().add(rootVBox);
     }

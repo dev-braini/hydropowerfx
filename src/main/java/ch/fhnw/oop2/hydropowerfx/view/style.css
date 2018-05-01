@@ -14,9 +14,11 @@
 }
 
 #content-split-pane-vertical {
+    //-fx-orientation: vertical;
 }
 
 #content-split-pane-horizontal {
+    //-fx-orientation: horizontal;
 
 }
 
