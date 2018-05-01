@@ -23,11 +23,11 @@ public class RootPanel extends StackPane implements ViewMixin {
     private SplitPane      contentSplitPaneVertical,
                            contentSplitPaneHorizontal;
 
-    private StackPane      mainContentLeft,
-                           mainContentRight_Text,
-                           mainContentRight_Map,
-                           mainContentRight_Grouped,
-                           mainContentRight_Time;
+    private StackPane      mainContentLeft;
+    private TextView       mainContentRight_Text;
+    private MapView        mainContentRight_Map;
+    private GroupedView    mainContentRight_Grouped;
+    private TimeView       mainContentRight_Time;
 
     private StackPane      footer;
 
@@ -57,10 +57,10 @@ public class RootPanel extends StackPane implements ViewMixin {
         contentSplitPaneHorizontal = new SplitPane();
 
         mainContentLeft            = new StackPane();
-        mainContentRight_Text      = new StackPane();
-        mainContentRight_Map       = new StackPane();
-        mainContentRight_Grouped   = new StackPane();
-        mainContentRight_Time      = new StackPane();
+        mainContentRight_Text      = new TextView(rootPM);
+        mainContentRight_Map       = new MapView(rootPM);
+        mainContentRight_Grouped   = new GroupedView(rootPM);
+        mainContentRight_Time      = new TimeView(rootPM);
 
         powerStationTable          = new TableView();
         powerStationTable_Col0     = new TableColumn<>();
@@ -132,18 +132,6 @@ public class RootPanel extends StackPane implements ViewMixin {
         //main content
         mainContentLeft.setId("main-content-left");
         mainContentLeft.getChildren().add(powerStationTable);
-
-        mainContentRight_Text.setId("main-content-right-text");
-        mainContentRight_Text.getChildren().add(new Button("mainContentRight_Text"));
-
-        mainContentRight_Map.setId("main-content-right-map");
-        mainContentRight_Map.getChildren().add(new Button("mainContentRight_Map"));
-
-        mainContentRight_Grouped.setId("main-content-right-grouped");
-        mainContentRight_Grouped.getChildren().add(new Button("mainContentRight_Grouped"));
-
-        mainContentRight_Time.setId("main-content-right-time");
-        mainContentRight_Time.getChildren().add(new Button("mainContentRight_Time"));
 
         //footer
         footer.setId("footer");
