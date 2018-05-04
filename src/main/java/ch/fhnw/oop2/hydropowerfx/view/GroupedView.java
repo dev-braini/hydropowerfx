@@ -20,6 +20,7 @@ public class GroupedView extends StackPane implements ViewMixin {
     @Override
     public void initializeSelf() {
         this.setId("main-content-right-grouped");
+        this.addStylesheetFiles("../css/GroupedView.css");
     }
 
     @Override

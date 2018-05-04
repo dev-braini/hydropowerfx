@@ -118,24 +118,6 @@
     -fx-background-color: purple;
 }
 
-#main-content-right-text {
-    -fx-background-color: #ffce00;
-}
-
-#main-content-right-map {
-    -fx-background-color: #ff9a00;
-}
-
-#main-content-right-grouped {
-    -fx-background-color: #ff5a00;
-}
-
-#main-content-right-time {
-    -fx-background-color: #ff5a00;
-}
-
-
-
 #footer {
     -fx-background-color: green;
 }

@@ -20,6 +20,7 @@ public class MapView extends StackPane implements ViewMixin {
     @Override
     public void initializeSelf() {
         this.setId("main-content-right-map");
+        this.addStylesheetFiles("../css/MapView.css");
     }
 
     @Override

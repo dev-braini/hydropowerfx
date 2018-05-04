@@ -20,6 +20,7 @@ public class TimeView extends StackPane implements ViewMixin {
     @Override
     public void initializeSelf() {
         this.setId("main-content-right-time");
+        this.addStylesheetFiles("../css/TimeView.css");
     }
 
     @Override

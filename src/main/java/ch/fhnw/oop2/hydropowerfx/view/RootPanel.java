@@ -46,7 +46,7 @@ public class RootPanel extends StackPane implements ViewMixin {
 
     @Override
     public void initializeSelf() {
-        addStylesheetFiles("style.css");
+        addStylesheetFiles("../css/main.css");
     }
 
     @Override

@@ -28,6 +28,7 @@ public class TextView extends StackPane implements ViewMixin {
     @Override
     public void initializeSelf() {
         this.setId("main-content-right-text");
+        this.addStylesheetFiles("../css/TextView.css");
     }
 
     @Override
