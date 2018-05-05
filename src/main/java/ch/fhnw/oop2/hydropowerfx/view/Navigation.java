@@ -32,15 +32,15 @@ public class Navigation extends BorderPane implements ViewMixin {
     private FadeTransition  fadeTransitionOld,
                             fadeTransitionNew;
 
-    private VBox            mainContentRight_Text;
+    private VBox            mainContentRight_Text,
+                            mainContentRight_Map;
 
-    private StackPane       mainContentRight_Map,
-                            mainContentRight_Grouped,
+    private StackPane       mainContentRight_Grouped,
                             mainContentRight_Time;
 
     private SplitPane       contentSplitPaneHorizontal;
 
-    public Navigation(VBox mainContentRight_Text, StackPane mainContentRight_Map, StackPane mainContentRight_Grouped, StackPane mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
+    public Navigation(VBox mainContentRight_Text, VBox mainContentRight_Map, StackPane mainContentRight_Grouped, StackPane mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
         this.mainContentRight_Text      = mainContentRight_Text;
         this.mainContentRight_Map       = mainContentRight_Map;
         this.mainContentRight_Grouped   = mainContentRight_Grouped;

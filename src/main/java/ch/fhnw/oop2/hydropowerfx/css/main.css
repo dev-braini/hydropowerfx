@@ -119,6 +119,23 @@
     //-fx-background-color: purple;
 }
 
+#info-labels {
+    -fx-font-size: 18px;
+
+}
+
+#info-image {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.48), 10, 0, 0, 0);
+}
+
+#info-labels .info-label-title {
+    -fx-font-size: 37px;
+}
+
+.default-padding {
+    -fx-padding: 21px;
+}
+
 #footer {
     //-fx-background-color: green;
 }
