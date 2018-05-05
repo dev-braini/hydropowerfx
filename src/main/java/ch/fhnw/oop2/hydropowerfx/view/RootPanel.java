@@ -80,12 +80,12 @@ public class RootPanel extends StackPane implements ViewMixin {
         contentSplitPaneVertical.setOrientation(Orientation.VERTICAL);
         contentSplitPaneVertical.prefWidthProperty().bind(this.widthProperty());
         contentSplitPaneVertical.prefHeightProperty().bind(this.heightProperty());
-        contentSplitPaneVertical.setDividerPositions(0.8);
+        contentSplitPaneVertical.setDividerPositions(0.78);
         contentSplitPaneVertical.getItems().addAll(contentSplitPaneHorizontal, footer);
 
         contentSplitPaneVertical.setId("#content-split-pane-horizontal");
         contentSplitPaneHorizontal.setOrientation(Orientation.HORIZONTAL);
-        contentSplitPaneHorizontal.setDividerPositions(0.32);
+        contentSplitPaneHorizontal.setDividerPositions(0.4);
         contentSplitPaneHorizontal.getItems().addAll(mainContentLeft, mainContentRight_Text);
 
         //power station table

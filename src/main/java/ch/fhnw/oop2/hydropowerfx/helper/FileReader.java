@@ -1,4 +1,4 @@
-package ch.fhnw.oop2.hydropowerfx.presentationmodel;
+package ch.fhnw.oop2.hydropowerfx.helper;
 
 import ch.fhnw.oop2.hydropowerfx.model.PowerStation;
 import javafx.collections.ObservableList;

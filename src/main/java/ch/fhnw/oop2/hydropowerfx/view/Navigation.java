@@ -32,14 +32,15 @@ public class Navigation extends BorderPane implements ViewMixin {
     private FadeTransition  fadeTransitionOld,
                             fadeTransitionNew;
 
-    private StackPane       mainContentRight_Text,
-                            mainContentRight_Map,
+    private VBox            mainContentRight_Text;
+
+    private StackPane       mainContentRight_Map,
                             mainContentRight_Grouped,
                             mainContentRight_Time;
 
     private SplitPane       contentSplitPaneHorizontal;
 
-    public Navigation(StackPane mainContentRight_Text, StackPane mainContentRight_Map, StackPane mainContentRight_Grouped, StackPane mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
+    public Navigation(VBox mainContentRight_Text, StackPane mainContentRight_Map, StackPane mainContentRight_Grouped, StackPane mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
         this.mainContentRight_Text      = mainContentRight_Text;
         this.mainContentRight_Map       = mainContentRight_Map;
         this.mainContentRight_Grouped   = mainContentRight_Grouped;
@@ -110,7 +111,7 @@ public class Navigation extends BorderPane implements ViewMixin {
                 ToggleButton ButtonClicked = (ToggleButton) t1.getToggleGroup().getSelectedToggle();
 
                 if (ButtonOld != ButtonClicked) {
-                    if (animateChangeView((StackPane) ButtonClicked.getUserData())) {
+                    if (animateChangeView((Pane) ButtonClicked.getUserData())) {
                         ButtonClicked.setSelected(true);
                         ViewButtonGroup.setUserData(ButtonClicked);
                     } else {
@@ -157,7 +158,7 @@ public class Navigation extends BorderPane implements ViewMixin {
 
     }
 
-    private boolean animateChangeView(StackPane newView) {
+    private boolean animateChangeView(Pane newView) {
         Node oldView = this.contentSplitPaneHorizontal.getItems().get(1);
 
         if((fadeTransitionOld == null || (fadeTransitionOld.getStatus() != Animation.Status.RUNNING && fadeTransitionNew.getStatus() != Animation.Status.RUNNING)) && oldView != newView) {

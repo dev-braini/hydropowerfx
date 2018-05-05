@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
+import ch.fhnw.oop2.hydropowerfx.helper.FileReader;
 import ch.fhnw.oop2.hydropowerfx.model.PowerStation;
 
 import javafx.beans.property.SimpleStringProperty;

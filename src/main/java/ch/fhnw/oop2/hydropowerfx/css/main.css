@@ -1,6 +1,7 @@
 .root {
-    -fx-pref-width: 1600px;
+    -fx-pref-width: 1400px;
     -fx-pref-height: 900px;
+    -fx-font-family: 'Open Sans','Helvetica Neue', 'Arial', 'sans-serif';
 }
 
 #navigation {
@@ -115,9 +116,9 @@
 }
 
 #main-content-left {
-    -fx-background-color: purple;
+    //-fx-background-color: purple;
 }
 
 #footer {
-    -fx-background-color: green;
+    //-fx-background-color: green;
 }
