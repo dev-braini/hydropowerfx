@@ -162,7 +162,7 @@ public class Navigation extends BorderPane implements ViewMixin {
         Node oldView = this.contentSplitPaneHorizontal.getItems().get(1);
 
         if((fadeTransitionOld == null || (fadeTransitionOld.getStatus() != Animation.Status.RUNNING && fadeTransitionNew.getStatus() != Animation.Status.RUNNING)) && oldView != newView) {
-            Duration fadeDuration = Duration.millis(700);
+            Duration fadeDuration = Duration.millis(520);
             newView.setOpacity(0);
 
             //fade out old view
