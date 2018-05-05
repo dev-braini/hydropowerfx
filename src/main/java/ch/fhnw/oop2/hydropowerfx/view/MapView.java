@@ -19,10 +19,10 @@ import java.net.URL;
 public class MapView extends VBox implements ViewMixin {
     private final RootPM rootPM;
 
-    private MyBrowser myBrowser;
-    private PowerStationInfoBox infoBox;
-    private double lat;
-    private double lon;
+    private MyBrowser                 myBrowser;
+    private PowerStationInfoBox       infoBox;
+    private double                    lat;
+    private double                    lon;
     private EventHandler<ActionEvent> customEvent;
 
     public MapView(RootPM model) {
@@ -51,7 +51,6 @@ public class MapView extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
-
 
     }
 
@@ -96,7 +95,5 @@ public class MapView extends VBox implements ViewMixin {
 
             getChildren().add(toolbar);
         }
-
-
     }
 }
