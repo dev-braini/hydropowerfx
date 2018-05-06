@@ -2,12 +2,12 @@ package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /*
  * @author: Marco Peter & Markus Winter
  */
-public class GroupedView extends StackPane implements ViewMixin {
+public class GroupedView extends VBox implements ViewMixin {
     private final RootPM rootPM;
     private Button button;
 

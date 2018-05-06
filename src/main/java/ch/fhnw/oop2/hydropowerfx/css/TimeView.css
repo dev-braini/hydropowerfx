@@ -1,3 +1,43 @@
 #main-content-right-time {
     -fx-background-color: #ff5a00;
+    -fx-min-width: 600px;
+}
+
+.timeView-label-year-0, .timeView-label-year-1 {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-pref-height: 91px;
+    -fx-pref-width: 600px;
+}
+
+/* left */
+.timeView-label-year-0 {
+    -fx-padding: 0 397px 0 0;
+    -fx-alignment: top-right;
+}
+
+/* right */
+.timeView-label-year-1 {
+    -fx-padding: 0 0 0 397px;
+    -fx-alignment: top-left;
+}
+
+
+.timeView-label-name-0, .timeView-label-name-1 {
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-pref-width: 600px;
+    -fx-pref-height: 33px;
+}
+
+/* left */
+.timeView-label-name-0 {
+    -fx-padding: 0 398px 0 0;
+    -fx-alignment: bottom-right;
+}
+
+/* right */
+.timeView-label-name-1 {
+    -fx-padding: 0 0 0 398px;
+    -fx-alignment: bottom-left;
 }
