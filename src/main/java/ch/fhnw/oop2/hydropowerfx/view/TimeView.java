@@ -18,8 +18,8 @@ import javafx.util.Duration;
  */
 public class TimeView extends VBox implements ViewMixin {
     private final RootPM rootPM;
-    private ScrollPane scrollPane;
-    private VBox timeView;
+    private ScrollPane   scrollPane;
+    private VBox         timeView;
 
 
     private static void ensureVisible(ScrollPane pane, Node node) {
@@ -55,7 +55,7 @@ public class TimeView extends VBox implements ViewMixin {
     @Override
     public void initializeControls() {
         scrollPane = new ScrollPane();
-        timeView = new VBox();
+        timeView   = new VBox();
     }
 
     @Override
@@ -110,7 +110,6 @@ public class TimeView extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
-
 
     }
 }
