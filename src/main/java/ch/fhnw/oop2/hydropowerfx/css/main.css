@@ -52,7 +52,8 @@
 
 }
 
-#power-station-table.table-view .column-header {
+#power-station-table.table-view .column-header,
+#power-station-table.table-view .filler {
     -fx-background-color: white;
 }
 
@@ -75,6 +76,7 @@
 #power-station-table .table-row-cell:selected {
     -fx-background-color: #5086d8;
 }
+
 
 
 #power-station-table .column-header.col-name > .label {
