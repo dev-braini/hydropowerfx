@@ -28,7 +28,6 @@ public class RootPanel extends StackPane implements ViewMixin {
 
     private TableView      powerStationTable;
 
-
     public RootPanel(RootPM model) {
         this.rootPM = model;
 
