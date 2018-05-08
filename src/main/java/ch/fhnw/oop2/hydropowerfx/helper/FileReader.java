@@ -7,16 +7,15 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileReader
-{
+public class FileReader {
 
     FileInputStream fileInputStream = null;
-    BufferedReader bufferedReader = null;
+    BufferedReader  bufferedReader  = null;
 
     public void readPowerStations(String file, ObservableList<PowerStation> powerStationList) {
         try {
             fileInputStream = new FileInputStream(System.getProperty("user.dir") + file);
-            bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            bufferedReader  = new BufferedReader(new InputStreamReader(fileInputStream));
 
             String line = bufferedReader.readLine();
             while (line != null) {
