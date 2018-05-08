@@ -1,7 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.helper.PowerStationComboBox;
-import ch.fhnw.oop2.hydropowerfx.helper.PowerStationInfoBox;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -46,7 +45,7 @@ public class TextView extends VBox implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        infoHBox                     = new PowerStationInfoBox();
+        infoHBox                     = new PowerStationInfoBox(rootPM);
 
         mainBox_ScrollWrapper        = new ScrollPane();
         mainBox                      = new GridPane();
@@ -111,6 +110,18 @@ public class TextView extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
-
+        fieldName.getComboBox().valueProperty().bind(rootPM.nameProperty());
+        fieldType.getComboBox().valueProperty().bind(rootPM.typeProperty());
+        fieldLocation.getComboBox().valueProperty().bind(rootPM.locationProperty());
+        fieldCanton.getComboBox().valueProperty().bind(rootPM.cantonProperty());
+        fieldWaterVolume.getComboBox().valueProperty().bind(rootPM.waterVolumeProperty());
+        fieldPerformance.getComboBox().valueProperty().bind(rootPM.performanceProperty());
+        fieldFirstCommissioning.getComboBox().valueProperty().bind(rootPM.firstCommissioningProperty());
+        fieldLastCommissioning.getComboBox().valueProperty().bind(rootPM.lastCommissioningProperty());
+        fieldDegreeOfLatitude.getComboBox().valueProperty().bind(rootPM.degreeOfLatitudeProperty());
+        fieldDegreeOfLongitude.getComboBox().valueProperty().bind(rootPM.degreeOfLongitudeProperty());
+        fieldStatus.getComboBox().valueProperty().bind(rootPM.statusProperty());
+        fieldUsedWaters.getComboBox().valueProperty().bind(rootPM.usedWatersProperty());
+        fieldImageUrl.getComboBox().valueProperty().bind(rootPM.imageUrlProperty());
     }
 }

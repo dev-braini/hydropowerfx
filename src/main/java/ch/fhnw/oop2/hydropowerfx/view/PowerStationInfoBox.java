@@ -1,7 +1,11 @@
-package ch.fhnw.oop2.hydropowerfx.helper;
+package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -9,7 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class PowerStationInfoBox extends HBox {
+public class PowerStationInfoBox extends HBox implements ViewMixin {
+    private final RootPM             rootPM;
     private VBox                     info_LabelWrapper;
     private Label                    infoLabel_Name,
                                      infoLabel_Location,
@@ -19,7 +24,19 @@ public class PowerStationInfoBox extends HBox {
     private ImageView                infoImageView;
     private Pane                     spacer;
 
-    public PowerStationInfoBox() {
+    public PowerStationInfoBox(RootPM rootPM) {
+        this.rootPM = rootPM;
+
+        init();
+    }
+
+    @Override
+    public Node getStyleableNode() {
+        return this;
+    }
+
+    @Override
+    public void initializeControls() {
         info_LabelWrapper            = new VBox();
         infoLabel_Name               = new Label("Laufenburg");
         infoLabel_Location           = new Label("Laufenburg AG");
@@ -28,7 +45,10 @@ public class PowerStationInfoBox extends HBox {
         infoImage                    = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Wasserkraftwerk_Laufenburg1.jpg/1200px-Wasserkraftwerk_Laufenburg1.jpg", true);
         infoImageView                = new ImageView(infoImage);
         spacer                       = new Pane();
+    }
 
+    @Override
+    public void layoutControls() {
         info_LabelWrapper.setId("info-labels");
         infoLabel_Name.getStyleClass().add("info-label-title");
         info_LabelWrapper.getChildren().addAll(
@@ -50,7 +70,17 @@ public class PowerStationInfoBox extends HBox {
     }
 
     @Override
-    public Node getStyleableNode() {
-        return this;
+    public void setupBindings() {
+        infoLabel_Name.textProperty().bind(rootPM.nameProperty());
+        infoLabel_Location.textProperty().bind(rootPM.locationProperty());
+        infoLabel_Performance.textProperty().bind(Bindings.convert(rootPM.performanceProperty()));
+        infoLabel_FirstCommissioning.textProperty().bind(Bindings.convert(rootPM.firstCommissioningProperty()));
+
+        //infoImageView
+        /*if(rootPM.imageUrlProperty().toString() != "") {
+            System.out.println(rootPM.imageUrlProperty());
+            infoImage = new Image(rootPM.imageUrlProperty().toString(), true);
+            infoImageView.setImage(infoImage);
+        }*/
     }
 }

@@ -74,11 +74,13 @@ public class PowerStationTable extends TableView implements ViewMixin {
         tableCol3.setCellValueFactory(cellData -> cellData.getValue().firstCommissioningProperty().asObject());
 
         this.setItems(this.rootPM.getPowerStationList());
+
+        this.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> rootPM.showPowerStationDetails((PowerStation)newValue));
     }
 
     @Override
     public void setupBindings() {
-
 
     }
 

@@ -1,6 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.helper.PowerStationInfoBox;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -40,7 +39,7 @@ public class MapView extends VBox implements ViewMixin {
     @Override
     public void initializeControls() {
         myBrowser = new MyBrowser();
-        infoBox = new PowerStationInfoBox();
+        infoBox = new PowerStationInfoBox(rootPM);
     }
 
     @Override

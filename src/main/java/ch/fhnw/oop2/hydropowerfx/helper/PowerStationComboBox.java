@@ -6,9 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class PowerStationComboBox extends HBox {
+    private ComboBox comboBox = new ComboBox();
 
     public PowerStationComboBox(String labelName) {
-        ComboBox comboBox = new ComboBox();
 
         comboBox.getItems().addAll(
                 "Highest",
@@ -27,10 +27,12 @@ public class PowerStationComboBox extends HBox {
         this.getChildren().addAll(label, comboBox);
     }
 
-
-
     @Override
     public Node getStyleableNode() {
         return this;
+    }
+
+    public ComboBox getComboBox() {
+        return comboBox;
     }
 }
