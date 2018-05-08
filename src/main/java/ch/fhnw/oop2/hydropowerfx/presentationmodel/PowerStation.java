@@ -1,6 +1,5 @@
-package ch.fhnw.oop2.hydropowerfx.model;
+package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javafx.beans.property.*;
