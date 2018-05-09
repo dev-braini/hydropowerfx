@@ -24,19 +24,17 @@
 }
 
 
-#mainbox .combo-box {
-    -fx-focus-color: transparent;
+#mainbox .text-field {
+    -fx-focus-color: #5086d8;
     -fx-border-radius: 0;
-    -fx-border-width: 0.5px;
+    -fx-border-width: 1px;
     -fx-pref-height: 30px;
     -fx-pref-width: 5000px;
-    -fx-background-insets: 0, 0, 0, 0;
     -fx-min-width: 80px;
-    -fx-background-color: #cfcfcf;
     -fx-background-radius: 0;
 }
 
-#mainbox .combo-box .list-cell {
+/*#mainbox .text-field .list-cell {
     -fx-text-fill: #111111;
 }
 
@@ -65,4 +63,4 @@
 #mainbox .combo-box-popup .list-view .list-cell:filled:hover {
     -fx-background-color: #5086d8;
     -fx-text-fill: white;
-}
+}*/

@@ -20,9 +20,14 @@ public class PowerStationTable extends TableView implements ViewMixin {
 
     public PowerStationTable(RootPM rootPM) {
         this.rootPM = rootPM;
-        this.setId("power-station-table");
 
         init();
+    }
+
+    @Override
+    public void initializeSelf() {
+        this.setId("power-station-table");
+        this.addStylesheetFiles("../css/PowerStationTable.css");
     }
 
     @Override
@@ -77,6 +82,9 @@ public class PowerStationTable extends TableView implements ViewMixin {
 
         this.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> rootPM.showPowerStationDetails((PowerStation)newValue));
+
+        this.getSortOrder().setAll(tableCol0);
+        this.getSelectionModel().selectFirst();
     }
 
     @Override

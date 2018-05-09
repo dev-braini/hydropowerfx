@@ -28,6 +28,27 @@ public class PowerStation {
     /**
      * Default constructor.
      */
+    public PowerStation(int id) {
+        this(   id,
+                "",
+                "",
+                "",
+                "",
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                "",
+                "",
+                ""
+        );
+    }
+
+    /**
+     * Default constructor.
+     */
     public PowerStation(List<String> data) {
         this(   (int)     Integer.parseInt(data.get(0)),
                 (String)  data.get(1),

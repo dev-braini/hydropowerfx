@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.scene.Node;
@@ -13,6 +14,8 @@ import javafx.util.Duration;
  * @author: Marco Peter & Markus Winter
  */
 public class Navigation extends BorderPane implements ViewMixin {
+    private RootPM          rootPM;
+    private TableView       powerStationTable;
     private HBox            navigation_Left,
                             navigation_Right;
 
@@ -39,7 +42,9 @@ public class Navigation extends BorderPane implements ViewMixin {
 
     private SplitPane       contentSplitPaneHorizontal;
 
-    public Navigation(VBox mainContentRight_Text, VBox mainContentRight_Map, VBox mainContentRight_Grouped, VBox mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
+    public Navigation(RootPM rootPM, TableView powerStationTable, VBox mainContentRight_Text, VBox mainContentRight_Map, VBox mainContentRight_Grouped, VBox mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
+        this.rootPM                     = rootPM;
+        this.powerStationTable          = powerStationTable;
         this.mainContentRight_Text      = mainContentRight_Text;
         this.mainContentRight_Map       = mainContentRight_Map;
         this.mainContentRight_Grouped   = mainContentRight_Grouped;
@@ -47,6 +52,12 @@ public class Navigation extends BorderPane implements ViewMixin {
         this.contentSplitPaneHorizontal = contentSplitPaneHorizontal;
 
         init();
+    }
+
+    @Override
+    public void initializeSelf() {
+        this.setId("navigation");
+        this.addStylesheetFiles("../css/Navigation.css");
     }
 
     @Override
@@ -70,9 +81,6 @@ public class Navigation extends BorderPane implements ViewMixin {
 
     @Override
     public void layoutControls() {
-        //navigation
-        this.setId("navigation");
-
         ToggleGroup ViewButtonGroup = new ToggleGroup();
         ViewButtonGroup.setUserData(ButtonNav_ViewText);
 
@@ -109,6 +117,7 @@ public class Navigation extends BorderPane implements ViewMixin {
 
                 if (ButtonOld != ButtonClicked) {
                     if (animateChangeView((Pane) ButtonClicked.getUserData())) {
+                        rootPM.setCurrentView(((Pane) ButtonClicked.getUserData()).getId());
                         ButtonClicked.setSelected(true);
                         ViewButtonGroup.setUserData(ButtonClicked);
                     } else {
@@ -122,6 +131,16 @@ public class Navigation extends BorderPane implements ViewMixin {
         });
 
         Label_NavigationView.setText("Ansicht");
+
+        ButtonNav_ControlAdd.setOnAction(event -> {
+            rootPM.addToPowerStationList();
+            powerStationTable.getSelectionModel().selectLast();
+            powerStationTable.scrollTo(powerStationTable.getSelectionModel().getFocusedIndex());
+        });
+
+        ButtonNav_ControlRemove.setOnAction(event -> {
+            rootPM.removeFromPowerStationList(powerStationTable.getSelectionModel().getSelectedIndex());
+        });
 
         navigation_Left.getChildren().addAll(
                 ButtonNav_ControlSave,

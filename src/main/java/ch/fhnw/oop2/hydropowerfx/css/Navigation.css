@@ -1,0 +1,39 @@
+#navigation {
+    -fx-background-color: #5086d8;
+    -fx-pref-height: 122px;
+    -fx-padding: 15 0 15 0;
+}
+
+#navigation-left {
+
+}
+
+#navigation-right {
+
+}
+
+#navigation .toggle-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.38;
+    -fx-cursor: hand;
+    -fx-padding: 0 12 0 17;
+}
+
+#navigation .toggle-button:hover, .toggle-button:selected, .toggle-button:armed {
+    -fx-opacity: 0.8;
+}
+
+#navigation .toggle-button:selected, .toggle-button:armed {
+    -fx-opacity: 1;
+}
+
+#navigation .toggle-button:focused, .toggle-button:visited {
+
+}
+
+#navigation .label {
+    -fx-font-size: 14pt;
+    -fx-text-fill: white;
+    -fx-opacity: 0.8;
+    -fx-padding: 0 15 0 154;
+}

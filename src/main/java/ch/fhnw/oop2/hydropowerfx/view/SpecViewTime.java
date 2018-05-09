@@ -16,7 +16,7 @@ import javafx.util.Duration;
 /*
  * @author: Marco Peter & Markus Winter
  */
-public class TimeView extends VBox implements ViewMixin {
+public class SpecViewTime extends VBox implements ViewMixin {
     private final RootPM rootPM;
     private ScrollPane   scrollPane;
     private VBox         timeView;
@@ -40,7 +40,7 @@ public class TimeView extends VBox implements ViewMixin {
 
     }
 
-    public TimeView(RootPM model) {
+    public SpecViewTime(RootPM model) {
         this.rootPM = model;
 
         init();

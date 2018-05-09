@@ -15,7 +15,7 @@ import java.net.URL;
 /*
  * @author: Marco Peter & Markus Winter
  */
-public class MapView extends VBox implements ViewMixin {
+public class SpecViewMap extends VBox implements ViewMixin {
     private final RootPM rootPM;
 
     private MyBrowser                 myBrowser;
@@ -24,7 +24,7 @@ public class MapView extends VBox implements ViewMixin {
     private double                    lon;
     private EventHandler<ActionEvent> customEvent;
 
-    public MapView(RootPM model) {
+    public SpecViewMap(RootPM model) {
         this.rootPM = model;
 
         init();
@@ -38,7 +38,7 @@ public class MapView extends VBox implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        myBrowser = new MyBrowser();
+        myBrowser = new MyBrowser(rootPM);
         infoBox = new PowerStationInfoBox(rootPM);
     }
 
@@ -50,49 +50,38 @@ public class MapView extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
-
+        rootPM.degreeOfLongitudeProperty().addListener(observable -> myBrowser.setCoordinates());
+        rootPM.degreeOfLatitudeProperty().addListener(observable -> myBrowser.setCoordinates());
+        rootPM.currentViewProperty().addListener(observable -> myBrowser.setCoordinates());
     }
 
     class MyBrowser extends VBox {
-        WebView webView = new WebView();
-        WebEngine webEngine = webView.getEngine();
+        private final RootPM rootPM;
+        private WebView webView = new WebView();
+        private WebEngine webEngine = webView.getEngine();
 
-        public MyBrowser() {
+        public MyBrowser(RootPM rootPM) {
+            this.rootPM = rootPM;
             final URL urlGoogleMaps = getClass().getResource("GoogleMaps.html");
             webEngine.load(urlGoogleMaps.toExternalForm());
-            webEngine.setOnAlert(new EventHandler<WebEvent<String>>() {
+            /*webEngine.setOnAlert(new EventHandler<WebEvent<String>>() {
                 @Override
                 public void handle(WebEvent<String> e) {
                     System.out.println(e.toString());
                 }
-            });
+            });*/
 
 
             getChildren().add(webView);
+        }
 
-            final TextField latitude = new TextField("" + 47.481409);
-            final TextField longitude = new TextField("" + 8.211644);
-            Button update = new Button("Update");
-
-            customEvent = e -> {
-                lat = Double.parseDouble(latitude.getText());
-                lon = Double.parseDouble(longitude.getText());
-
-                System.out.printf("%.2f %.2f%n", lat, lon);
-
-                webEngine.executeScript("" +
-                        "window.lat = " + lat + ";" +
-                        "window.lon = " + lon + ";" +
-                        "document.goToLocation(window.lat, window.lon);"
-                );
-            };
-
-            update.setOnAction(customEvent);
-
-            HBox toolbar  = new HBox();
-            toolbar.getChildren().addAll(latitude, longitude, update);
-
-            getChildren().add(toolbar);
+        public void setCoordinates() {
+            webEngine.executeScript("" +
+                    "window.lat = " + rootPM.getDegreeOfLatitude() + ";" +
+                    "window.lon = " + rootPM.getDegreeOfLongitude() + ";" +
+                    "window.markerName = '" + rootPM.getName() + "';" +
+                    "document.goToLocation(window.lat, window.lon, window.markerName);"
+            );
         }
     }
 }

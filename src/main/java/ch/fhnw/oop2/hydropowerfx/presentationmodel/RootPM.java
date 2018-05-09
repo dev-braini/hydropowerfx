@@ -5,28 +5,32 @@ import ch.fhnw.oop2.hydropowerfx.helper.FileReader;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import java.util.Optional;
 
 
 public class RootPM {
 
-    private final StringProperty                applicationTitle   = new SimpleStringProperty("HydroPowerFX");
-    private final StringProperty                greeting           = new SimpleStringProperty("Hello World!");
-    private final ObservableList<PowerStation>  powerStationList   = FXCollections.observableArrayList();
+    private final StringProperty                applicationTitle    = new SimpleStringProperty("HydroPowerFX");
+    private final StringProperty                greeting            = new SimpleStringProperty("Hello World!");
+    private final ObservableList<PowerStation>  powerStationList    = FXCollections.observableArrayList();
+    private final StringProperty                currentView         = new SimpleStringProperty();
 
-    private final IntegerProperty               id                 = new SimpleIntegerProperty();
-    private final StringProperty                name               = new SimpleStringProperty();
-    private final StringProperty                type               = new SimpleStringProperty();
-    private final StringProperty                location           = new SimpleStringProperty();
-    private final StringProperty                canton             = new SimpleStringProperty();
-    private final DoubleProperty                waterVolume        = new SimpleDoubleProperty();
-    private final DoubleProperty                performance        = new SimpleDoubleProperty();
-    private final IntegerProperty               firstCommissioning = new SimpleIntegerProperty();
-    private final IntegerProperty               lastCommissioning  = new SimpleIntegerProperty();
-    private final DoubleProperty                degreeOfLatitude   = new SimpleDoubleProperty();
-    private final DoubleProperty                degreeOfLongitude  = new SimpleDoubleProperty();
-    private final StringProperty                status             = new SimpleStringProperty();
-    private final StringProperty                usedWaters         = new SimpleStringProperty();
-    private final StringProperty                imageUrl           = new SimpleStringProperty();
+    private final IntegerProperty               id                  = new SimpleIntegerProperty();
+    private final StringProperty                name                = new SimpleStringProperty();
+    private final StringProperty                type                = new SimpleStringProperty();
+    private final StringProperty                location            = new SimpleStringProperty();
+    private final StringProperty                canton              = new SimpleStringProperty();
+    private final DoubleProperty                waterVolume         = new SimpleDoubleProperty();
+    private final DoubleProperty                performance         = new SimpleDoubleProperty();
+    private final IntegerProperty               firstCommissioning  = new SimpleIntegerProperty();
+    private final IntegerProperty               lastCommissioning   = new SimpleIntegerProperty();
+    private final DoubleProperty                degreeOfLatitude    = new SimpleDoubleProperty();
+    private final DoubleProperty                degreeOfLongitude   = new SimpleDoubleProperty();
+    private final StringProperty                status              = new SimpleStringProperty();
+    private final StringProperty                usedWaters          = new SimpleStringProperty();
+    private final StringProperty                imageUrl            = new SimpleStringProperty();
 
     public RootPM() {
         FileReader fileReader = new FileReader();
@@ -35,6 +39,33 @@ public class RootPM {
 
     public ObservableList<PowerStation> getPowerStationList() {
         return powerStationList;
+    }
+
+    public int getHighestIdFromPowerStationList() {
+        return powerStationList.stream()
+                               .mapToInt(PowerStation::getId)
+                               .max().orElse(0);
+    }
+
+    public void addToPowerStationList() {
+        int id = getHighestIdFromPowerStationList() + 1;
+        powerStationList.add(new PowerStation(id));
+    }
+
+    public void removeFromPowerStationList(int index) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation Dialog");
+        alert.setHeaderText("Das ausgewählte Kraftwirklich wirklich löschen?");
+
+        ButtonType buttonYes = new ButtonType("Ja, jetzt löschen");
+        ButtonType buttonNo = new ButtonType("Nein");
+
+        alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonYes){
+            powerStationList.remove(index);
+        }
     }
 
     // all getters and setters
@@ -60,6 +91,18 @@ public class RootPM {
 
     public void setGreeting(String greeting) {
         this.greeting.set(greeting);
+    }
+
+    public String getCurrentView() {
+        return currentView.get();
+    }
+
+    public StringProperty currentViewProperty() {
+        return currentView;
+    }
+
+    public void setCurrentView(String view) {
+        this.currentView.set(view);
     }
 
 
@@ -120,6 +163,24 @@ public class RootPM {
     public StringProperty  imageUrlProperty()                                { return imageUrl;                                 }
     public void            setImageUrl(String imageUrl)                      { this.imageUrl.set(imageUrl);                     }
 
+    public void updatePowerStation(int index) {
+        PowerStation selectedPS = getPowerStationList().get(index);
+
+        selectedPS.setId(id.get());
+        selectedPS.setName(name.get());
+        selectedPS.setType(type.get());
+        selectedPS.setLocation(location.get());
+        selectedPS.setCanton(canton.get());
+        selectedPS.setWaterVolume(waterVolume.get());
+        selectedPS.setPerformance(performance.get());
+        selectedPS.setFirstCommissioning(firstCommissioning.get());
+        selectedPS.setLastCommissioning(lastCommissioning.get());
+        selectedPS.setDegreeOfLatitude(degreeOfLatitude.get());
+        selectedPS.setDegreeOfLongitude(degreeOfLongitude.get());
+        selectedPS.setStatus(status.get());
+        selectedPS.setUsedWaters(usedWaters.get());
+        selectedPS.setImageUrl(imageUrl.get());
+    }
 
     public void showPowerStationDetails(PowerStation powerStation) {
         if (powerStation != null) {

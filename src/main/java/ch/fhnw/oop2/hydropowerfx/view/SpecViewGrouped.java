@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 /*
  * @author: Marco Peter & Markus Winter
  */
-public class GroupedView extends VBox implements ViewMixin {
+public class SpecViewGrouped extends VBox implements ViewMixin {
     private final RootPM rootPM;
     private Label       labelCanton;
     private Label       labelWater;
@@ -31,7 +31,7 @@ public class GroupedView extends VBox implements ViewMixin {
     private TableColumn performanceTable_Col1;
     private TableColumn performanceTable_Col2;
 
-    public GroupedView(RootPM model) {
+    public SpecViewGrouped(RootPM model) {
         this.rootPM = model;
 
         init();
