@@ -2,6 +2,15 @@
 
 }
 
+#power-station-table .list-cell:filled:selected,
+#power-station-table .tree-cell:filled:selected,
+#power-station-table .table-row-cell:filled:selected,
+#power-station-table .tree-table-row-cell:filled:selected,
+#power-station-table .table-row-cell:filled > .table-cell:selected,
+#power-station-table .tree-table-row-cell:filled > .tree-table-cell:selected {
+    -fx-background: black;
+}
+
 #power-station-table.table-view .column-header,
 #power-station-table.table-view .filler {
     -fx-background-color: white;
@@ -25,6 +34,7 @@
 
 #power-station-table .table-row-cell:selected {
     -fx-background-color: #5086d8;
+    -fx-text-fill: #ffffff !important;
 }
 
 #power-station-table .column-header.col-name > .label {
