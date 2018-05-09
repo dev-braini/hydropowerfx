@@ -19,14 +19,14 @@ public class RootPanel extends StackPane implements ViewMixin {
                             contentSplitPaneHorizontal;
 
     private StackPane       mainContentLeft;
+    private TableView       powerStationTable;
+
     private SpecViewText    specViewText;
     private SpecViewMap     specViewMap;
     private SpecViewGrouped specViewGrouped;
     private SpecViewTime    specViewTime;
 
-    private StackPane       footer;
-
-    private TableView       powerStationTable;
+    private Footer          footer;
 
     public RootPanel(RootPM model) {
         this.rootPM = model;
@@ -36,7 +36,7 @@ public class RootPanel extends StackPane implements ViewMixin {
 
     @Override
     public void initializeSelf() {
-        addStylesheetFiles("../css/main.css");
+        addStylesheetFiles("../css/Root.css");
     }
 
     @Override
@@ -54,7 +54,7 @@ public class RootPanel extends StackPane implements ViewMixin {
         specViewGrouped            = new SpecViewGrouped(rootPM);
         specViewTime               = new SpecViewTime(rootPM);
 
-        footer                     = new StackPane();
+        footer                     = new Footer(rootPM);
 
         navigation                 = new Navigation(rootPM, powerStationTable, specViewText, specViewMap, specViewGrouped, specViewTime, contentSplitPaneHorizontal);
     }
@@ -77,10 +77,6 @@ public class RootPanel extends StackPane implements ViewMixin {
         //main content
         mainContentLeft.setId("main-content-left");
         mainContentLeft.getChildren().add(powerStationTable);
-
-        //footer
-        footer.setId("footer");
-        footer.getChildren().add(new Button("footer"));
 
         //root wrapper
         rootVBox.setId("root-vbox");
