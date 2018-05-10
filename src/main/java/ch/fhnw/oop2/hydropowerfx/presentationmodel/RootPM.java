@@ -7,7 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class RootPM {
@@ -39,6 +41,17 @@ public class RootPM {
 
     public ObservableList<PowerStation> getPowerStationList() {
         return powerStationList;
+    }
+
+    public List<PowerStation> getPowerStationListSortedFirstCommissioning() {
+
+        return powerStationList.stream()
+                               .sorted((ps1, ps2) -> Long.compare(ps2.getFirstCommissioning(), ps1.getFirstCommissioning()))
+                               .collect(Collectors.toList());
+    }
+
+    public int getPowerStationIndex(PowerStation ps) {
+        return getPowerStationListSortedFirstCommissioning().indexOf(ps);
     }
 
     public int getHighestIdFromPowerStationList() {

@@ -1,14 +1,8 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import java.net.URL;
 
@@ -16,13 +10,10 @@ import java.net.URL;
  * @author: Marco Peter & Markus Winter
  */
 public class SpecViewMap extends VBox implements ViewMixin {
-    private final RootPM rootPM;
+    private final RootPM              rootPM;
 
     private MyBrowser                 myBrowser;
     private PowerStationInfoBox       infoBox;
-    private double                    lat;
-    private double                    lon;
-    private EventHandler<ActionEvent> customEvent;
 
     public SpecViewMap(RootPM model) {
         this.rootPM = model;

@@ -52,7 +52,7 @@ public class RootPanel extends StackPane implements ViewMixin {
         specViewText               = new SpecViewText(rootPM, powerStationTable);
         specViewMap                = new SpecViewMap(rootPM);
         specViewGrouped            = new SpecViewGrouped(rootPM);
-        specViewTime               = new SpecViewTime(rootPM);
+        specViewTime               = new SpecViewTime(rootPM, powerStationTable);
 
         footer                     = new Footer(rootPM);
 

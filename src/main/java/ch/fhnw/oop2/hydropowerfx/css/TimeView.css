@@ -22,6 +22,10 @@
     -fx-alignment: top-left;
 }
 
+/*.timeview-active {
+    -fx-border-width: 2px;
+    -fx-border-color: red;
+}*/
 
 .timeView-label-name-0, .timeView-label-name-1 {
     -fx-text-fill: black;
