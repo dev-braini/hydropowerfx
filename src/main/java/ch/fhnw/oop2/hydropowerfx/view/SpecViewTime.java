@@ -3,11 +3,8 @@ package ch.fhnw.oop2.hydropowerfx.view;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStation;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.animation.*;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
@@ -71,27 +68,12 @@ public class SpecViewTime extends VBox implements ViewMixin {
         scrollPane.setFitToWidth(true);
 
 
-        final EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+        /*final EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 ensureVisible(scrollPane, timeView.getChildren().get(timeView.getChildren().size()-1));
             }
-        };
-
-
-        final EventHandler<ActionEvent> handler2 = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ensureVisible(scrollPane, timeView.getChildren().get(0));
-            }
-        };
-
-        Button btn = new Button(" bottom ");
-        Button btn2 = new Button(" top ");
-        btn.setOnAction(handler);
-        btn2.setOnAction(handler2);
-
-        timeView.getChildren().add(btn);
+        };*/
 
         int i = 0;
 
@@ -114,8 +96,6 @@ public class SpecViewTime extends VBox implements ViewMixin {
 
             i++;
         }
-
-        timeView.getChildren().add(btn2);
 
         scrollPane.setContent(timeView);
         this.getChildren().add(scrollPane);
