@@ -27,21 +27,14 @@ public class SpecViewTime extends VBox implements ViewMixin {
 
 
     private static void ensureVisible(ScrollPane pane, Node node) {
-        double   width   = pane.getContent().getBoundsInLocal().getWidth();
-        double   height  = pane.getContent().getBoundsInLocal().getHeight();
-
-        double   x        = node.getBoundsInParent().getMaxX();
+        double   height   = pane.getContent().getBoundsInLocal().getHeight();
         double   y        = node.getBoundsInParent().getMaxY();
-
+        double   duration = Math.abs((y/height) - pane.getVvalue())+1;
         Timeline timeline = new Timeline();
-        double duration = Math.abs((y/height) - pane.getVvalue())+1;
+
         duration = duration*duration*700;
-
-        System.out.println(
-                duration
-        );
-
         timeline.setCycleCount(1);
+
         KeyValue kv = new KeyValue(pane.vvalueProperty(), (y/height), Interpolator.EASE_OUT);
         KeyFrame kf = new KeyFrame(Duration.millis(duration), kv);
 
