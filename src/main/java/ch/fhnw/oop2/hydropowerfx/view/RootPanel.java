@@ -72,7 +72,7 @@ public class RootPanel extends StackPane implements ViewMixin {
         contentSplitPaneVertical.setId("#content-split-pane-horizontal");
         contentSplitPaneHorizontal.setOrientation(Orientation.HORIZONTAL);
         contentSplitPaneHorizontal.setDividerPositions(0.4);
-        contentSplitPaneHorizontal.getItems().addAll(mainContentLeft, specViewGrouped);
+        contentSplitPaneHorizontal.getItems().addAll(mainContentLeft, specViewText);
 
         //main content
         mainContentLeft.setId("main-content-left");
