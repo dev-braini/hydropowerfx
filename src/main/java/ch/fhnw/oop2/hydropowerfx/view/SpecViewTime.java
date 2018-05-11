@@ -34,10 +34,16 @@ public class SpecViewTime extends VBox implements ViewMixin {
         double   y        = node.getBoundsInParent().getMaxY();
 
         Timeline timeline = new Timeline();
+        double duration = Math.abs((y/height) - pane.getVvalue())+1;
+        duration = duration*duration*700;
+
+        System.out.println(
+                duration
+        );
 
         timeline.setCycleCount(1);
         KeyValue kv = new KeyValue(pane.vvalueProperty(), (y/height), Interpolator.EASE_OUT);
-        KeyFrame kf = new KeyFrame(Duration.millis(1000), kv);
+        KeyFrame kf = new KeyFrame(Duration.millis(duration), kv);
 
         timeline.getKeyFrames().add(kf);
         timeline.play();
