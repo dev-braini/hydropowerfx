@@ -13,30 +13,38 @@ import java.util.stream.Collectors;
 
 
 public class RootPM {
+    private final StringProperty                       applicationTitle     = new SimpleStringProperty("HydroPowerFX");
+    private final ObservableList<PowerStation>         powerStationList     = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByCanton>      groupedByCanton      = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByUsedWaters>  groupedByUsedWaters  = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByPerformance> groupedByPerformance = FXCollections.observableArrayList();
+    private final StringProperty                       currentView          = new SimpleStringProperty();
 
-    private final StringProperty                applicationTitle    = new SimpleStringProperty("HydroPowerFX");
-    private final StringProperty                greeting            = new SimpleStringProperty("Hello World!");
-    private final ObservableList<PowerStation>  powerStationList    = FXCollections.observableArrayList();
-    private final StringProperty                currentView         = new SimpleStringProperty();
-
-    private final IntegerProperty               id                  = new SimpleIntegerProperty();
-    private final StringProperty                name                = new SimpleStringProperty();
-    private final StringProperty                type                = new SimpleStringProperty();
-    private final StringProperty                location            = new SimpleStringProperty();
-    private final StringProperty                canton              = new SimpleStringProperty();
-    private final DoubleProperty                waterVolume         = new SimpleDoubleProperty();
-    private final DoubleProperty                performance         = new SimpleDoubleProperty();
-    private final IntegerProperty               firstCommissioning  = new SimpleIntegerProperty();
-    private final IntegerProperty               lastCommissioning   = new SimpleIntegerProperty();
-    private final DoubleProperty                degreeOfLatitude    = new SimpleDoubleProperty();
-    private final DoubleProperty                degreeOfLongitude   = new SimpleDoubleProperty();
-    private final StringProperty                status              = new SimpleStringProperty();
-    private final StringProperty                usedWaters          = new SimpleStringProperty();
-    private final StringProperty                imageUrl            = new SimpleStringProperty();
+    private final IntegerProperty                      id                   = new SimpleIntegerProperty();
+    private final StringProperty                       name                 = new SimpleStringProperty();
+    private final StringProperty                       type                 = new SimpleStringProperty();
+    private final StringProperty                       location             = new SimpleStringProperty();
+    private final StringProperty                       canton               = new SimpleStringProperty();
+    private final DoubleProperty                       waterVolume          = new SimpleDoubleProperty();
+    private final DoubleProperty                       performance          = new SimpleDoubleProperty();
+    private final IntegerProperty                      firstCommissioning   = new SimpleIntegerProperty();
+    private final IntegerProperty                      lastCommissioning    = new SimpleIntegerProperty();
+    private final DoubleProperty                       degreeOfLatitude     = new SimpleDoubleProperty();
+    private final DoubleProperty                       degreeOfLongitude    = new SimpleDoubleProperty();
+    private final StringProperty                       status               = new SimpleStringProperty();
+    private final StringProperty                       usedWaters           = new SimpleStringProperty();
+    private final StringProperty                       imageUrl             = new SimpleStringProperty();
 
     public RootPM() {
         FileReader fileReader = new FileReader();
         fileReader.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
+        fileReader.readCantons("/src/main/resources/data/cantons.csv", groupedByCanton);
+
+        updateGroupedByCanton();
+        updateGroupedByUsedWaters();
+        initGroupedByPerformance();
+        updateGroupedByPerformance();
+
     }
 
     public ObservableList<PowerStation> getPowerStationList() {
@@ -44,10 +52,10 @@ public class RootPM {
     }
 
     public List<PowerStation> getPowerStationListSortedFirstCommissioning() {
-
-        return powerStationList.stream()
-                               .sorted((ps1, ps2) -> Long.compare(ps2.getFirstCommissioning(), ps1.getFirstCommissioning()))
-                               .collect(Collectors.toList());
+        return powerStationList
+                .stream()
+                .sorted((ps1, ps2) -> Long.compare(ps2.getFirstCommissioning(), ps1.getFirstCommissioning()))
+                .collect(Collectors.toList());
     }
 
     public int getPowerStationIndex(PowerStation ps) {
@@ -55,9 +63,22 @@ public class RootPM {
     }
 
     public int getHighestIdFromPowerStationList() {
-        return powerStationList.stream()
-                               .mapToInt(PowerStation::getId)
-                               .max().orElse(0);
+        return powerStationList
+                .stream()
+                .mapToInt(PowerStation::getId)
+                .max().orElse(0);
+    }
+
+    public ObservableList<GroupedByCanton> getPowerStationListByCanton() {
+        return groupedByCanton;
+    }
+
+    public ObservableList<GroupedByUsedWaters> getPowerStationListByUsedWaters() {
+        return groupedByUsedWaters;
+    }
+
+    public ObservableList<GroupedByPerformance> getPowerStationListByPerformance() {
+        return groupedByPerformance;
     }
 
     public void addToPowerStationList() {
@@ -92,18 +113,6 @@ public class RootPM {
 
     public void setApplicationTitle(String applicationTitle) {
         this.applicationTitle.set(applicationTitle);
-    }
-
-    public String getGreeting() {
-        return greeting.get();
-    }
-
-    public StringProperty greetingProperty() {
-        return greeting;
-    }
-
-    public void setGreeting(String greeting) {
-        this.greeting.set(greeting);
     }
 
     public String getCurrentView() {
@@ -176,6 +185,76 @@ public class RootPM {
     public StringProperty  imageUrlProperty()                                { return imageUrl;                                 }
     public void            setImageUrl(String imageUrl)                      { this.imageUrl.set(imageUrl);                     }
 
+    public void updateGroupedByCanton() {
+        for (GroupedByCanton item : groupedByCanton) {
+            item.setTotalPerformance(0.0);
+            item.setNumberOfPowerStations(0);
+        }
+
+        for (PowerStation ps : powerStationList) {
+            for (GroupedByCanton item : groupedByCanton) {
+                if (item.getCantonShortcut().equals(ps.getCanton())) {
+                    item.increaseNumberOfPowerStations();
+                    item.increaseotalPerformance(ps.getPerformance());
+                }
+            }
+        }
+    }
+
+    public void updateGroupedByUsedWaters() {
+        groupedByUsedWaters.clear();
+
+        for (PowerStation ps : powerStationList) {
+            GroupedByUsedWaters newItem = new GroupedByUsedWaters(ps.getUsedWaters());
+
+            if(!groupedByUsedWaters.contains(newItem)) {
+                groupedByUsedWaters.add(newItem);
+            }
+
+            groupedByUsedWaters.get(groupedByUsedWaters.indexOf(newItem)).increaseNumberOfPowerStations();
+            groupedByUsedWaters.get(groupedByUsedWaters.indexOf(newItem)).increaseotalPerformance(ps.getPerformance());
+
+        }
+
+        groupedByUsedWaters.removeIf(item -> (item.getNumberOfPowerStations() < 3));
+    }
+
+    public void initGroupedByPerformance() {
+        groupedByPerformance.clear();
+
+        groupedByPerformance.add(new GroupedByPerformance("    0   -   10", 0.0, 10.0));
+        groupedByPerformance.add(new GroupedByPerformance("  10   -   20", 10.0, 20.0));
+        groupedByPerformance.add(new GroupedByPerformance("  20   -   30", 20.0, 30.0));
+        groupedByPerformance.add(new GroupedByPerformance("  30   -   40", 30.0, 40.0));
+        groupedByPerformance.add(new GroupedByPerformance("  40   -   50", 40.0, 50.0));
+        groupedByPerformance.add(new GroupedByPerformance("  50   -   60", 50.0, 60.0));
+        groupedByPerformance.add(new GroupedByPerformance("  60   -   70", 60.0, 70.0));
+        groupedByPerformance.add(new GroupedByPerformance("  70   -   80", 70.0, 80.0));
+        groupedByPerformance.add(new GroupedByPerformance("  80   -   90", 80.0, 90.0));
+        groupedByPerformance.add(new GroupedByPerformance("  90   - 100", 90.0, 100.0));
+        groupedByPerformance.add(new GroupedByPerformance("100   - 150", 100.0, 150.0));
+        groupedByPerformance.add(new GroupedByPerformance("150   - 200", 150.0, 200.0));
+        groupedByPerformance.add(new GroupedByPerformance("         > 200", 200.0, Double.MAX_VALUE));
+    }
+
+    public void updateGroupedByPerformance() {
+        for (GroupedByPerformance item : groupedByPerformance) {
+            item.setTotalPerformance(0.0);
+            item.setNumberOfPowerStations(0);
+        }
+
+        for (PowerStation ps : powerStationList) {
+            Double itemPerformance = ps.getPerformance();
+
+            for (GroupedByPerformance item : groupedByPerformance) {
+                if(itemPerformance >= item.getPerformanceMin() && itemPerformance < item.getPerformanceMax()) {
+                    item.increaseNumberOfPowerStations();
+                    item.increaseotalPerformance(itemPerformance);
+                }
+            }
+        }
+    }
+
     public void updatePowerStation(int index) {
         PowerStation selectedPS = getPowerStationList().get(index);
 
@@ -193,6 +272,10 @@ public class RootPM {
         selectedPS.setStatus(status.get());
         selectedPS.setUsedWaters(usedWaters.get());
         selectedPS.setImageUrl(imageUrl.get());
+
+        updateGroupedByCanton();
+        updateGroupedByUsedWaters();
+        updateGroupedByPerformance();
     }
 
     public void showPowerStationDetails(PowerStation powerStation) {

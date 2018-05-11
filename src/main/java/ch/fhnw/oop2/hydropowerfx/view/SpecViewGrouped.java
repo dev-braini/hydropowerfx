@@ -1,10 +1,20 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.GroupedByCanton;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.GroupedByPerformance;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.GroupedByUsedWaters;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
+import javax.swing.*;
 
 /*
  * @author: Marco Peter & Markus Winter
@@ -16,20 +26,16 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
     private Label       labelPerformance;
 
     private TableView   cantonTable;
-    private TableColumn cantonTable_Col0;
-    private TableColumn cantonTable_Col1;
-    private TableColumn cantonTable_Col2;
-    private TableColumn cantonTable_Col3;
 
     private TableView   waterTable;
-    private TableColumn waterTable_Col0;
-    private TableColumn waterTable_Col1;
-    private TableColumn waterTable_Col2;
+    private TableColumn<GroupedByUsedWaters, String> waterTable_Col0;
+    private TableColumn<GroupedByUsedWaters, Double> waterTable_Col1;
+    private TableColumn<GroupedByUsedWaters, Integer> waterTable_Col2;
 
     private TableView   performanceTable;
-    private TableColumn performanceTable_Col0;
-    private TableColumn performanceTable_Col1;
-    private TableColumn performanceTable_Col2;
+    private TableColumn<GroupedByPerformance, String>  performanceTable_Col0;
+    private TableColumn<GroupedByPerformance, Double>  performanceTable_Col1;
+    private TableColumn<GroupedByPerformance, Integer>  performanceTable_Col2;
 
     public SpecViewGrouped(RootPM model) {
         this.rootPM = model;
@@ -50,11 +56,7 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
         labelWater             = new Label();
         labelPerformance       = new Label();
 
-        cantonTable            = new TableView();
-        cantonTable_Col0       = new TableColumn<>();
-        cantonTable_Col1       = new TableColumn<>();
-        cantonTable_Col2       = new TableColumn<>();
-        cantonTable_Col3       = new TableColumn<>();
+        cantonTable            = new Footer(rootPM);
 
         waterTable             = new TableView();
         waterTable_Col0        = new TableColumn<>();
@@ -72,25 +74,65 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
         labelCanton.getStyleClass().add("table-label");
         labelCanton.setText("Nach Kantonen");
         labelWater.getStyleClass().add("table-label");
-        labelWater.setText("Nach Gewässer");
+        labelWater.setText("Nach Gewässer (mind. 3 Kraftwerke)");
         labelPerformance.getStyleClass().add("table-label");
         labelPerformance.setText("Nach Leistung (MW)");
 
-        cantonTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        /*cantonTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         cantonTable_Col0.setText("    ");
         cantonTable_Col1.setText("Kanton");
         cantonTable_Col2.setText("Leistung Total (MW)");
-        cantonTable_Col3.setText("Anzahl");
+        cantonTable_Col3.setText("Anzahl");*/
 
         waterTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        waterTable.setItems(rootPM.getPowerStationListByUsedWaters());
         waterTable_Col0.setText("Gewässer");
         waterTable_Col1.setText("Leistung Total (MW)");
         waterTable_Col2.setText("Anzahl");
 
+        waterTable.getColumns().addAll(
+                waterTable_Col0,
+                waterTable_Col1,
+                waterTable_Col2
+        );
+
+        waterTable_Col0.setCellValueFactory(cellData -> cellData.getValue().usedWatersProperty());
+        //waterTable_Col1.setCellValueFactory(cellData -> cellData.getValue().totalPerformanceProperty().asObject());
+        waterTable_Col1.setCellValueFactory(cellData -> {
+            ObservableValue<Double> value = cellData.getValue().totalPerformanceProperty().asObject();
+            double totalPerformance = Math.round(value.getValue()*100);
+            cellData.getValue().setTotalPerformance(totalPerformance/100);
+
+            return value;
+        });
+        waterTable_Col2.setCellValueFactory(cellData -> cellData.getValue().numberOfPowerStationsProperty().asObject());
+
+        waterTable.getSortOrder().setAll(waterTable_Col0);
+        waterTable_Col1.setSortType(TableColumn.SortType.DESCENDING);
+        //waterTable.getSelectionModel().selectFirst();
+
+
         performanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        performanceTable.setItems(rootPM.getPowerStationListByPerformance());
         performanceTable_Col0.setText("Leistungsumfang (MW)");
         performanceTable_Col1.setText("Leistung Total (MW)");
         performanceTable_Col2.setText("Anzahl");
+
+        performanceTable.getColumns().addAll(
+                performanceTable_Col0,
+                performanceTable_Col1,
+                performanceTable_Col2
+        );
+
+        performanceTable_Col0.setCellValueFactory(cellData -> cellData.getValue().performanceRangeProperty());
+        performanceTable_Col1.setCellValueFactory(cellData -> {
+            ObservableValue<Double> value = cellData.getValue().totalPerformanceProperty().asObject();
+            double totalPerformance = Math.round(value.getValue()*100);
+            cellData.getValue().setTotalPerformance(totalPerformance/100);
+
+            return value;
+        });
+        performanceTable_Col2.setCellValueFactory(cellData -> cellData.getValue().numberOfPowerStationsProperty().asObject());
 
         this.getChildren().addAll(
                 labelCanton,
