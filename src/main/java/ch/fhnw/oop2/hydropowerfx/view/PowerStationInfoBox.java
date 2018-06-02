@@ -16,8 +16,10 @@ import javafx.scene.layout.VBox;
 public class PowerStationInfoBox extends HBox implements ViewMixin {
     private final RootPM             rootPM;
     private VBox                     info_LabelWrapper;
+    private HBox                     infoLabel_LocationCanton;
     private Label                    infoLabel_Name,
                                      infoLabel_Location,
+                                     infoLabel_Canton,
                                      infoLabel_Performance,
                                      infoLabel_FirstCommissioning;
     private Image                    infoImage;
@@ -39,7 +41,9 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
     public void initializeControls() {
         info_LabelWrapper            = new VBox();
         infoLabel_Name               = new Label("Laufenburg");
-        infoLabel_Location           = new Label("Laufenburg AG");
+        infoLabel_Location           = new Label("Laufenburg");
+        infoLabel_Canton             = new Label("AG");
+        infoLabel_LocationCanton     = new HBox();
         infoLabel_Performance        = new Label("106.0 MW");
         infoLabel_FirstCommissioning = new Label("1914");
         infoImage                    = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Wasserkraftwerk_Laufenburg1.jpg/1200px-Wasserkraftwerk_Laufenburg1.jpg", true);
@@ -49,11 +53,13 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
 
     @Override
     public void layoutControls() {
+        infoLabel_LocationCanton.getChildren().addAll(infoLabel_Location, infoLabel_Canton);
+        infoLabel_LocationCanton.setSpacing(7);
         info_LabelWrapper.setId("info-labels");
         infoLabel_Name.getStyleClass().add("info-label-title");
         info_LabelWrapper.getChildren().addAll(
                 infoLabel_Name,
-                infoLabel_Location,
+                infoLabel_LocationCanton,
                 infoLabel_Performance,
                 infoLabel_FirstCommissioning
         );
@@ -73,6 +79,7 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
     public void setupBindings() {
         infoLabel_Name.textProperty().bind(rootPM.nameProperty());
         infoLabel_Location.textProperty().bind(rootPM.locationProperty());
+        infoLabel_Canton.textProperty().bind(rootPM.cantonProperty());
         infoLabel_Performance.textProperty().bind(Bindings.convert(rootPM.performanceProperty()));
         infoLabel_FirstCommissioning.textProperty().bind(Bindings.convert(rootPM.firstCommissioningProperty()));
 

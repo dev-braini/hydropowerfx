@@ -37,10 +37,11 @@ public class HydroPowerApp extends Application {
 				alert.setTitle("Close Confirmation Dialog");
 				alert.setHeaderText("Sie haben noch ungespeicherte Änderungen!");
 
-				ButtonType buttonDiscard = new ButtonType("Änderungen verwerfen");
+				ButtonType buttonDiscard = new ButtonType("Ohne speichern verlassen");
 				ButtonType buttonSave = new ButtonType("Speichern und verlassen");
+				ButtonType buttonCancel = new ButtonType("Abbrechen");
 
-				alert.getButtonTypes().setAll(buttonDiscard, buttonSave);
+				alert.getButtonTypes().setAll(buttonDiscard, buttonSave, buttonCancel);
 
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == buttonDiscard) {
@@ -49,6 +50,9 @@ public class HydroPowerApp extends Application {
 				if (result.get() == buttonSave) {
 					rootPM.savePowerStationList();
 					Platform.exit();
+				}
+				if (result.get() == buttonCancel) {
+					we.consume();
 				}
 			} else Platform.exit();
 		   }
