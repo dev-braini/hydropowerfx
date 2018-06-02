@@ -14,13 +14,17 @@
 
 #navigation .toggle-button {
     -fx-background-color: transparent;
-    -fx-opacity: 0.38;
+    -fx-opacity: 0.65;
     -fx-cursor: hand;
     -fx-padding: 0 12 0 17;
 }
 
+#navigation .toggle-button.inactive {
+    -fx-opacity: 0.15;
+}
+
 #navigation .toggle-button:hover, .toggle-button:selected, .toggle-button:armed {
-    -fx-opacity: 0.8;
+    -fx-opacity: 1;
 }
 
 #navigation .toggle-button:selected, .toggle-button:armed {

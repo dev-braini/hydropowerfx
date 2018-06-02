@@ -13,29 +13,33 @@ import java.util.stream.Collectors;
 
 
 public class RootPM {
-    private FileHandler                                fileHandler          = new FileHandler();
+    private FileHandler                                fileHandler                = new FileHandler();
 
-    private final StringProperty                       applicationTitle     = new SimpleStringProperty("HydroPowerFX");
-    private final ObservableList<PowerStation>         powerStationList     = FXCollections.observableArrayList();
-    private final ObservableList<GroupedByCanton>      groupedByCanton      = FXCollections.observableArrayList();
-    private final ObservableList<GroupedByUsedWaters>  groupedByUsedWaters  = FXCollections.observableArrayList();
-    private final ObservableList<GroupedByPerformance> groupedByPerformance = FXCollections.observableArrayList();
-    private final StringProperty                       currentView          = new SimpleStringProperty();
+    private final StringProperty                       applicationTitle           = new SimpleStringProperty("HydroPowerFX");
+    private final ObservableList<PowerStation>         powerStationList           = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByCanton>      groupedByCanton            = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByUsedWaters>  groupedByUsedWaters        = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByPerformance> groupedByPerformance       = FXCollections.observableArrayList();
+    private final StringProperty                       currentView                = new SimpleStringProperty();
 
-    private final IntegerProperty                      id                   = new SimpleIntegerProperty();
-    private final StringProperty                       name                 = new SimpleStringProperty();
-    private final StringProperty                       type                 = new SimpleStringProperty();
-    private final StringProperty                       location             = new SimpleStringProperty();
-    private final StringProperty                       canton               = new SimpleStringProperty();
-    private final DoubleProperty                       waterVolume          = new SimpleDoubleProperty();
-    private final DoubleProperty                       performance          = new SimpleDoubleProperty();
-    private final IntegerProperty                      firstCommissioning   = new SimpleIntegerProperty();
-    private final IntegerProperty                      lastCommissioning    = new SimpleIntegerProperty();
-    private final DoubleProperty                       degreeOfLatitude     = new SimpleDoubleProperty();
-    private final DoubleProperty                       degreeOfLongitude    = new SimpleDoubleProperty();
-    private final StringProperty                       status               = new SimpleStringProperty();
-    private final StringProperty                       usedWaters           = new SimpleStringProperty();
-    private final StringProperty                       imageUrl             = new SimpleStringProperty();
+    private final IntegerProperty                      id                         = new SimpleIntegerProperty();
+    private final StringProperty                       name                       = new SimpleStringProperty();
+    private final StringProperty                       type                       = new SimpleStringProperty();
+    private final StringProperty                       location                   = new SimpleStringProperty();
+    private final StringProperty                       canton                     = new SimpleStringProperty();
+    private final DoubleProperty                       waterVolume                = new SimpleDoubleProperty();
+    private final DoubleProperty                       performance                = new SimpleDoubleProperty();
+    private final IntegerProperty                      firstCommissioning         = new SimpleIntegerProperty();
+    private final IntegerProperty                      lastCommissioning          = new SimpleIntegerProperty();
+    private final DoubleProperty                       degreeOfLatitude           = new SimpleDoubleProperty();
+    private final DoubleProperty                       degreeOfLongitude          = new SimpleDoubleProperty();
+    private final StringProperty                       status                     = new SimpleStringProperty();
+    private final StringProperty                       usedWaters                 = new SimpleStringProperty();
+    private final StringProperty                       imageUrl                   = new SimpleStringProperty();
+
+    private final BooleanProperty                      buttonNavControlSaveActive = new SimpleBooleanProperty();
+    private final BooleanProperty                      buttonNavControlUndoActive = new SimpleBooleanProperty();
+    private final BooleanProperty                      buttonNavControlRedoActive = new SimpleBooleanProperty();
 
     public RootPM() {
         fileHandler.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
@@ -54,6 +58,7 @@ public class RootPM {
 
     public void savePowerStationList() {
         fileHandler.writePowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
+        setButtonNavControlSaveActive(false);
     }
 
     public List<PowerStation> getPowerStationListSortedFirstCommissioning() {
@@ -108,6 +113,45 @@ public class RootPM {
     }
 
     // all getters and setters
+    public Boolean getButtonNavControlSaveActive() {
+        return buttonNavControlSaveActive.get();
+    }
+
+    public BooleanProperty buttonNavControlSaveActiveProperty() {
+        return buttonNavControlSaveActive;
+    }
+
+    public void setButtonNavControlSaveActive(Boolean buttonNavControlSaveActive) {
+        this.buttonNavControlSaveActive.set(buttonNavControlSaveActive);
+    }
+
+
+    public Boolean getButtonNavControlUndoActive() {
+        return buttonNavControlUndoActive.get();
+    }
+
+    public BooleanProperty buttonNavControlUndoActiveProperty() {
+        return buttonNavControlUndoActive;
+    }
+
+    public void setButtonNavControlUndoActive(Boolean buttonNavControlUndoActive) {
+        this.buttonNavControlUndoActive.set(buttonNavControlUndoActive);
+    }
+
+
+    public Boolean getButtonNavControlRedoActive() {
+        return buttonNavControlRedoActive.get();
+    }
+
+    public BooleanProperty buttonNavControlRedoActiveProperty() {
+        return buttonNavControlRedoActive;
+    }
+
+    public void setButtonNavControlRedoActive(Boolean buttonNavControlRedoActive) {
+        this.buttonNavControlRedoActive.set(buttonNavControlRedoActive);
+    }
+
+
     public String getApplicationTitle() {
         return applicationTitle.get();
     }
@@ -119,6 +163,7 @@ public class RootPM {
     public void setApplicationTitle(String applicationTitle) {
         this.applicationTitle.set(applicationTitle);
     }
+
 
     public String getCurrentView() {
         return currentView.get();
@@ -277,6 +322,8 @@ public class RootPM {
         selectedPS.setStatus(status.get());
         selectedPS.setUsedWaters(usedWaters.get());
         selectedPS.setImageUrl(imageUrl.get());
+
+        setButtonNavControlSaveActive(true);
 
         updateGroupedByCanton();
         updateGroupedByUsedWaters();

@@ -85,27 +85,27 @@ public class Navigation extends BorderPane implements ViewMixin {
         ViewButtonGroup.setUserData(ButtonNav_ViewText);
 
 
-        setButtonIcon(ButtonNav_ControlSave,   "control-save"  );
-        setButtonIcon(ButtonNav_ControlAdd,    "control-add"   );
-        setButtonIcon(ButtonNav_ControlRemove, "control-remove");
-        setButtonIcon(ButtonNav_ControlUndo,   "control-undo"  );
-        setButtonIcon(ButtonNav_ControlRedo,   "control-redo"  );
+        setButtonIcon(ButtonNav_ControlSave,   "control-save", "inactive");
+        setButtonIcon(ButtonNav_ControlAdd,    "control-add", "");
+        setButtonIcon(ButtonNav_ControlRemove, "control-remove", "");
+        setButtonIcon(ButtonNav_ControlUndo,   "control-undo", "inactive");
+        setButtonIcon(ButtonNav_ControlRedo,   "control-redo", "inactive");
 
 
-        setButtonIcon(ButtonNav_ViewText, "view-text");
+        setButtonIcon(ButtonNav_ViewText, "view-text", "");
         ButtonNav_ViewText.setUserData(mainContentRight_Text);
         ButtonNav_ViewText.setToggleGroup(ViewButtonGroup);
         ButtonNav_ViewText.setSelected(true);
 
-        setButtonIcon(ButtonNav_ViewMap, "view-map");
+        setButtonIcon(ButtonNav_ViewMap, "view-map", "");
         ButtonNav_ViewMap.setUserData(mainContentRight_Map);
         ButtonNav_ViewMap.setToggleGroup(ViewButtonGroup);
 
-        setButtonIcon(ButtonNav_ViewGrouped, "view-grouped");
+        setButtonIcon(ButtonNav_ViewGrouped, "view-grouped", "");
         ButtonNav_ViewGrouped.setUserData(mainContentRight_Grouped);
         ButtonNav_ViewGrouped.setToggleGroup(ViewButtonGroup);
 
-        setButtonIcon(ButtonNav_ViewTime, "view-time");
+        setButtonIcon(ButtonNav_ViewTime, "view-time", "");
         ButtonNav_ViewTime.setUserData(mainContentRight_Time);
         ButtonNav_ViewTime.setToggleGroup(ViewButtonGroup);
 
@@ -133,8 +133,10 @@ public class Navigation extends BorderPane implements ViewMixin {
         Label_NavigationView.setText("Ansicht");
 
         ButtonNav_ControlSave.setOnAction(event -> {
-            rootPM.savePowerStationList();
-
+            if(!ButtonNav_ControlSave.getStyleClass().contains("inactive")) {
+                rootPM.savePowerStationList();
+                ButtonNav_ControlSave.getStyleClass().add("inactive");
+            }
         });
 
         ButtonNav_ControlAdd.setOnAction(event -> {
@@ -174,6 +176,37 @@ public class Navigation extends BorderPane implements ViewMixin {
     }
 
     @Override
+    public void setupValueChangedListeners() {
+
+        rootPM.buttonNavControlSaveActiveProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    ButtonNav_ControlSave.setSelected(false);
+
+                    if(newValue) ButtonNav_ControlSave.getStyleClass().remove("inactive");
+                    else ButtonNav_ControlSave.getStyleClass().remove("inactive");
+                }
+        );
+
+        rootPM.buttonNavControlUndoActiveProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    ButtonNav_ControlUndo.setSelected(false);
+
+                    if(newValue) ButtonNav_ControlUndo.getStyleClass().remove("inactive");
+                    else ButtonNav_ControlUndo.getStyleClass().remove("inactive");
+                }
+        );
+
+        rootPM.buttonNavControlRedoActiveProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    ButtonNav_ControlRedo.setSelected(false);
+
+                    if(newValue) ButtonNav_ControlRedo.getStyleClass().remove("inactive");
+                    else ButtonNav_ControlRedo.getStyleClass().remove("inactive");
+                }
+        );
+    }
+
+    @Override
     public void setupBindings() {
 
     }
@@ -209,10 +242,11 @@ public class Navigation extends BorderPane implements ViewMixin {
         return false;
     }
 
-    private void setButtonIcon(ToggleButton button, String icon) {
+    private void setButtonIcon(ToggleButton button, String icon, String additionalClass) {
         ImageView imageControlSave = new ImageView();
         imageControlSave.setImage(new Image("file:///" + System.getProperty("user.dir") + "/src/main/resources/icons/" + icon + ".png"));
         button.setGraphic(imageControlSave);
+        button.getStyleClass().add(additionalClass);
     }
 
 
