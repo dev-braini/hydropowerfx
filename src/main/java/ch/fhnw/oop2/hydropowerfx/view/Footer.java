@@ -48,8 +48,8 @@ public class Footer extends TableView implements ViewMixin {
         tableCol0.setText("");            tableCol0.getStyleClass().add("col-name"); tableCol0.setMinWidth(38); tableCol0.setMaxWidth(38); tableCol0.setResizable(false);
         tableCol1.setText("Kanton");                tableCol1.getStyleClass().add("col-canton"); tableCol1.setMinWidth(140);
 
-        tableCol2.setText("Leistung Total (MW)");   tableCol2.getStyleClass().add("col-performance");  tableCol2.setMinWidth(140); tableCol2.setMaxWidth(140); tableCol2.setResizable(false);
-        tableCol3.setText("Anzahl");  tableCol3.getStyleClass().add("col-first-commissioning");  tableCol3.setMinWidth(140); tableCol3.setMaxWidth(140); tableCol3.setResizable(false);
+        tableCol2.setText("Leistung Total (MW)");   tableCol2.getStyleClass().addAll("col-performance", "align-center-right");  tableCol2.setMinWidth(148); tableCol2.setMaxWidth(148); tableCol2.setResizable(false);
+        tableCol3.setText("Anzahl");  tableCol3.getStyleClass().addAll("col-first-commissioning", "align-center-right");  tableCol3.setMinWidth(90); tableCol3.setMaxWidth(90); tableCol3.setResizable(false);
         this.setId("footer-table");
         this.getColumns().addAll(
                 tableCol0,

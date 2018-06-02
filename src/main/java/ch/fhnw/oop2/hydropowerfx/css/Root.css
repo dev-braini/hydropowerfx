@@ -36,3 +36,9 @@
 .default-padding {
     -fx-padding: 21px;
 }
+
+.align-center-right {
+    -fx-alignment: center-right;
+    -fx-padding: 0 13px 0 0;
+}
+

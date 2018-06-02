@@ -87,8 +87,8 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
         waterTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         waterTable.setItems(rootPM.getPowerStationListByUsedWaters());
         waterTable_Col0.setText("Gewässer");
-        waterTable_Col1.setText("Leistung Total (MW)");
-        waterTable_Col2.setText("Anzahl");
+        waterTable_Col1.setText("Leistung Total (MW)"); waterTable_Col1.getStyleClass().add("align-center-right"); waterTable_Col1.setMinWidth(148); waterTable_Col1.setMaxWidth(148); waterTable_Col1.setResizable(false);
+        waterTable_Col2.setText("Anzahl");              waterTable_Col2.getStyleClass().add("align-center-right"); waterTable_Col2.setMinWidth(90); waterTable_Col2.setMaxWidth(90); waterTable_Col2.setResizable(false);
 
         waterTable.getColumns().addAll(
                 waterTable_Col0,
@@ -115,8 +115,8 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
         performanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         performanceTable.setItems(rootPM.getPowerStationListByPerformance());
         performanceTable_Col0.setText("Leistungsumfang (MW)");
-        performanceTable_Col1.setText("Leistung Total (MW)");
-        performanceTable_Col2.setText("Anzahl");
+        performanceTable_Col1.setText("Leistung Total (MW)");  performanceTable_Col1.getStyleClass().add("align-center-right"); performanceTable_Col1.setMinWidth(148); performanceTable_Col1.setMaxWidth(148); performanceTable_Col1.setResizable(false);
+        performanceTable_Col2.setText("Anzahl");               performanceTable_Col2.getStyleClass().add("align-center-right"); performanceTable_Col2.setMinWidth(90); performanceTable_Col2.setMaxWidth(90); performanceTable_Col2.setResizable(false);
 
         performanceTable.getColumns().addAll(
                 performanceTable_Col0,
