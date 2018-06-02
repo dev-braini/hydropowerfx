@@ -81,7 +81,17 @@ public class PowerStationTable extends TableView implements ViewMixin {
         this.setItems(this.rootPM.getPowerStationList());
 
         this.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> rootPM.showPowerStationDetails((PowerStation)newValue));
+                (observable, oldValue, newValue) -> {
+                    if(newValue != null) {
+                        rootPM.showPowerStationDetails((PowerStation)newValue);
+                        rootPM.setPowerStationTableSelectedIndex(this.getSelectionModel().getSelectedIndex());
+                    }
+                });
+
+        this.rootPM.powerStationTableSelectedIndexProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if(newValue.longValue() != -1) this.getSelectionModel().select(this.getItems().get((Integer) newValue));
+                });
 
         this.getSortOrder().setAll(tableCol0);
         this.getSelectionModel().selectFirst();

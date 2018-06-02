@@ -135,8 +135,22 @@ public class Navigation extends BorderPane implements ViewMixin {
         ButtonNav_ControlSave.setOnAction(event -> {
             if(!ButtonNav_ControlSave.getStyleClass().contains("inactive")) {
                 rootPM.savePowerStationList();
-                ButtonNav_ControlSave.getStyleClass().add("inactive");
             }
+            ButtonNav_ControlSave.setSelected(false);
+        });
+
+        ButtonNav_ControlUndo.setOnAction(event -> {
+            if(!ButtonNav_ControlUndo.getStyleClass().contains("inactive")) {
+                rootPM.undoPowerStationList();
+            }
+            ButtonNav_ControlUndo.setSelected(false);
+        });
+
+        ButtonNav_ControlRedo.setOnAction(event -> {
+            if(!ButtonNav_ControlRedo.getStyleClass().contains("inactive")) {
+                rootPM.redoPowerStationList();
+            }
+            ButtonNav_ControlRedo.setSelected(false);
         });
 
         ButtonNav_ControlAdd.setOnAction(event -> {
@@ -180,28 +194,22 @@ public class Navigation extends BorderPane implements ViewMixin {
 
         rootPM.buttonNavControlSaveActiveProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    ButtonNav_ControlSave.setSelected(false);
-
                     if(newValue) ButtonNav_ControlSave.getStyleClass().remove("inactive");
-                    else ButtonNav_ControlSave.getStyleClass().remove("inactive");
+                    else ButtonNav_ControlSave.getStyleClass().add("inactive");
                 }
         );
 
         rootPM.buttonNavControlUndoActiveProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    ButtonNav_ControlUndo.setSelected(false);
-
                     if(newValue) ButtonNav_ControlUndo.getStyleClass().remove("inactive");
-                    else ButtonNav_ControlUndo.getStyleClass().remove("inactive");
+                    else ButtonNav_ControlUndo.getStyleClass().add("inactive");
                 }
         );
 
         rootPM.buttonNavControlRedoActiveProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    ButtonNav_ControlRedo.setSelected(false);
-
                     if(newValue) ButtonNav_ControlRedo.getStyleClass().remove("inactive");
-                    else ButtonNav_ControlRedo.getStyleClass().remove("inactive");
+                    else ButtonNav_ControlRedo.getStyleClass().add("inactive");
                 }
         );
     }

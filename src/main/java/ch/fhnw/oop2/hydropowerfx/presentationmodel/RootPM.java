@@ -7,43 +7,54 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 public class RootPM {
-    private FileHandler                                fileHandler                = new FileHandler();
+    private FileHandler                                fileHandler                     = new FileHandler();
 
-    private final StringProperty                       applicationTitle           = new SimpleStringProperty("HydroPowerFX");
-    private final ObservableList<PowerStation>         powerStationList           = FXCollections.observableArrayList();
-    private final ObservableList<GroupedByCanton>      groupedByCanton            = FXCollections.observableArrayList();
-    private final ObservableList<GroupedByUsedWaters>  groupedByUsedWaters        = FXCollections.observableArrayList();
-    private final ObservableList<GroupedByPerformance> groupedByPerformance       = FXCollections.observableArrayList();
-    private final StringProperty                       currentView                = new SimpleStringProperty();
+    private final StringProperty                       applicationTitle                = new SimpleStringProperty("HydroPowerFX");
+    private final ObservableList<PowerStation>         powerStationList                = FXCollections.observableArrayList();
+    private final List<ObservableList<PowerStation>>   powerStationListHistory         = new ArrayList<>();
+    private final IntegerProperty                      powerStationListHistoryIndex    = new SimpleIntegerProperty(0);
 
-    private final IntegerProperty                      id                         = new SimpleIntegerProperty();
-    private final StringProperty                       name                       = new SimpleStringProperty();
-    private final StringProperty                       type                       = new SimpleStringProperty();
-    private final StringProperty                       location                   = new SimpleStringProperty();
-    private final StringProperty                       canton                     = new SimpleStringProperty();
-    private final DoubleProperty                       waterVolume                = new SimpleDoubleProperty();
-    private final DoubleProperty                       performance                = new SimpleDoubleProperty();
-    private final IntegerProperty                      firstCommissioning         = new SimpleIntegerProperty();
-    private final IntegerProperty                      lastCommissioning          = new SimpleIntegerProperty();
-    private final DoubleProperty                       degreeOfLatitude           = new SimpleDoubleProperty();
-    private final DoubleProperty                       degreeOfLongitude          = new SimpleDoubleProperty();
-    private final StringProperty                       status                     = new SimpleStringProperty();
-    private final StringProperty                       usedWaters                 = new SimpleStringProperty();
-    private final StringProperty                       imageUrl                   = new SimpleStringProperty();
+    private final ObservableList<GroupedByCanton>      groupedByCanton                 = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByUsedWaters>  groupedByUsedWaters             = FXCollections.observableArrayList();
+    private final ObservableList<GroupedByPerformance> groupedByPerformance            = FXCollections.observableArrayList();
+    private final IntegerProperty                      powerStationTableSelectedIndex  = new SimpleIntegerProperty();
+    private final StringProperty                       currentView                     = new SimpleStringProperty();
 
-    private final BooleanProperty                      buttonNavControlSaveActive = new SimpleBooleanProperty();
-    private final BooleanProperty                      buttonNavControlUndoActive = new SimpleBooleanProperty();
-    private final BooleanProperty                      buttonNavControlRedoActive = new SimpleBooleanProperty();
+    private final IntegerProperty                      id                              = new SimpleIntegerProperty();
+    private final StringProperty                       name                            = new SimpleStringProperty();
+    private final StringProperty                       type                            = new SimpleStringProperty();
+    private final StringProperty                       location                        = new SimpleStringProperty();
+    private final StringProperty                       canton                          = new SimpleStringProperty();
+    private final DoubleProperty                       waterVolume                     = new SimpleDoubleProperty();
+    private final DoubleProperty                       performance                     = new SimpleDoubleProperty();
+    private final IntegerProperty                      firstCommissioning              = new SimpleIntegerProperty();
+    private final IntegerProperty                      lastCommissioning               = new SimpleIntegerProperty();
+    private final DoubleProperty                       degreeOfLatitude                = new SimpleDoubleProperty();
+    private final DoubleProperty                       degreeOfLongitude               = new SimpleDoubleProperty();
+    private final StringProperty                       status                          = new SimpleStringProperty();
+    private final StringProperty                       usedWaters                      = new SimpleStringProperty();
+    private final StringProperty                       imageUrl                        = new SimpleStringProperty();
+
+    private final BooleanProperty                      buttonNavControlSaveActive      = new SimpleBooleanProperty();
+    private final BooleanProperty                      buttonNavControlUndoActive      = new SimpleBooleanProperty();
+    private final BooleanProperty                      buttonNavControlRedoActive      = new SimpleBooleanProperty();
 
     public RootPM() {
         fileHandler.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
         fileHandler.readCantons("/src/main/resources/data/cantons.csv", groupedByCanton);
+
+        ObservableList<PowerStation> powerStationListNew = FXCollections.observableArrayList();
+        fileHandler.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationListNew);
+        powerStationListHistory.add(powerStationListNew);
+        powerStationListHistoryIndex.set(powerStationListHistory.size()-1);
 
         updateGroupedByCanton();
         updateGroupedByUsedWaters();
@@ -58,7 +69,55 @@ public class RootPM {
 
     public void savePowerStationList() {
         fileHandler.writePowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
+
+        ObservableList<PowerStation> powerStationListNew = FXCollections.observableArrayList();
+
+        fileHandler.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationListNew);
+
+
+        powerStationListHistory.add(powerStationListNew);
+
+        powerStationListHistoryIndex.set(powerStationListHistory.size()-1);
+
         setButtonNavControlSaveActive(false);
+        setButtonNavControlUndoActive(true);
+    }
+
+    public void undoPowerStationList() {
+        powerStationListHistoryIndex.set(powerStationListHistoryIndex.get() - 1);
+
+        int oldIndex = getPowerStationTableSelectedIndex();
+        setPowerStationTableSelectedIndex(-1);
+
+        powerStationList.removeAll(powerStationList);
+        powerStationList.addAll(powerStationListHistory.get(powerStationListHistoryIndex.get()));
+
+        setPowerStationTableSelectedIndex(oldIndex);
+        setButtonNavControlRedoActive(true);
+        setButtonNavControlSaveActive(true);
+
+        if(powerStationListHistoryIndex.get() == 0) {
+            System.out.println("setButtonNavControlUndoActive - false");
+            setButtonNavControlUndoActive(false);
+        }
+
+    }
+
+    public void redoPowerStationList() {
+        powerStationListHistoryIndex.set(powerStationListHistoryIndex.get() + 1);
+
+        int oldIndex = getPowerStationTableSelectedIndex();
+        setPowerStationTableSelectedIndex(-1);
+
+        powerStationList.removeAll(powerStationList);
+        powerStationList.addAll(powerStationListHistory.get(powerStationListHistoryIndex.get()));
+
+        setPowerStationTableSelectedIndex(oldIndex);
+        setButtonNavControlSaveActive(true);
+
+        if(powerStationListHistoryIndex.get() == powerStationListHistory.size() - 1) setButtonNavControlRedoActive(false);
+        if(powerStationListHistoryIndex.get() > 0) setButtonNavControlUndoActive(true);
+
     }
 
     public List<PowerStation> getPowerStationListSortedFirstCommissioning() {
@@ -177,6 +236,18 @@ public class RootPM {
         this.currentView.set(view);
     }
 
+
+    public Integer getPowerStationTableSelectedIndex() {
+        return powerStationTableSelectedIndex.get();
+    }
+
+    public IntegerProperty powerStationTableSelectedIndexProperty() {
+        return powerStationTableSelectedIndex;
+
+    }
+    public void setPowerStationTableSelectedIndex(Integer powerStationTableSelectedIndex) {
+        this.powerStationTableSelectedIndex.set(powerStationTableSelectedIndex);
+    }
 
 
     public Integer         getId()                                           { return id.get();                                 }
