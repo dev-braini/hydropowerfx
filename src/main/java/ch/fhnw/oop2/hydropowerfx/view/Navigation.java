@@ -132,6 +132,11 @@ public class Navigation extends BorderPane implements ViewMixin {
 
         Label_NavigationView.setText("Ansicht");
 
+        ButtonNav_ControlSave.setOnAction(event -> {
+            rootPM.savePowerStationList();
+
+        });
+
         ButtonNav_ControlAdd.setOnAction(event -> {
             rootPM.addToPowerStationList();
             powerStationTable.getSelectionModel().selectLast();
@@ -170,7 +175,6 @@ public class Navigation extends BorderPane implements ViewMixin {
 
     @Override
     public void setupBindings() {
-
 
     }
 

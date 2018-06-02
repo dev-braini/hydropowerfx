@@ -1,6 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import ch.fhnw.oop2.hydropowerfx.helper.FileReader;
+import ch.fhnw.oop2.hydropowerfx.helper.FileHandler;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 
 public class RootPM {
+    private FileHandler                                fileHandler          = new FileHandler();
+
     private final StringProperty                       applicationTitle     = new SimpleStringProperty("HydroPowerFX");
     private final ObservableList<PowerStation>         powerStationList     = FXCollections.observableArrayList();
     private final ObservableList<GroupedByCanton>      groupedByCanton      = FXCollections.observableArrayList();
@@ -36,9 +38,8 @@ public class RootPM {
     private final StringProperty                       imageUrl             = new SimpleStringProperty();
 
     public RootPM() {
-        FileReader fileReader = new FileReader();
-        fileReader.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
-        fileReader.readCantons("/src/main/resources/data/cantons.csv", groupedByCanton);
+        fileHandler.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
+        fileHandler.readCantons("/src/main/resources/data/cantons.csv", groupedByCanton);
 
         updateGroupedByCanton();
         updateGroupedByUsedWaters();
@@ -49,6 +50,10 @@ public class RootPM {
 
     public ObservableList<PowerStation> getPowerStationList() {
         return powerStationList;
+    }
+
+    public void savePowerStationList() {
+        fileHandler.writePowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
     }
 
     public List<PowerStation> getPowerStationListSortedFirstCommissioning() {
