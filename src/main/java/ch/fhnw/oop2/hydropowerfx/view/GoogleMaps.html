@@ -52,6 +52,7 @@
             alert("goToLocation, x: " + x +", y:" + y + ", markerName:" + markerName);
             var latLng = new google.maps.LatLng(x, y);
             marker.setPosition(latLng);
+            markerName = "<strong style='display: block; text-align: center;'>"+markerName+"</strong><br><span style='display: block; text-align: center; font-size: 11px; color: #727272'>("+x+", "+y+")<span>";
             infobulle.setContent(markerName);
             map.setCenter(latLng);
         }
