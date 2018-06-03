@@ -7,7 +7,7 @@ import javafx.scene.web.WebView;
 import java.net.URL;
 
 /*
- * @author: Marco Peter & Markus Winter
+ * @author: Markus Winter
  */
 public class SpecViewMap extends VBox implements ViewMixin {
     private final RootPM              rootPM;

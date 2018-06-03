@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Model class for a PowerStation.
  *
- * @author Marco Peter & Markus Winter
+ * @author Markus Winter
  */
 public class GroupedByCanton {
     private final IntegerProperty  id;

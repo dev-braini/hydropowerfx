@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 import javafx.geometry.Orientation;
 
 /*
- * @author: Marco Peter & Markus Winter
+ * @author: Markus Winter
  */
 public class RootPanel extends StackPane implements ViewMixin {
     private final RootPM    rootPM;

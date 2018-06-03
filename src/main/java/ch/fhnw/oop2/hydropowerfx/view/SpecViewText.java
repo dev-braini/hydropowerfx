@@ -10,7 +10,7 @@ import javafx.util.converter.NumberStringConverter;
 import java.util.Locale;
 
 /*
- * @author: Marco Peter & Markus Winter
+ * @author: Markus Winter
  */
 public class SpecViewText extends VBox implements ViewMixin {
     private final RootPM          rootPM;

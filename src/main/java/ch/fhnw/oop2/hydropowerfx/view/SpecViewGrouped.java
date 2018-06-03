@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javax.swing.*;
 
 /*
- * @author: Marco Peter & Markus Winter
+ * @author: Markus Winter
  */
 public class SpecViewGrouped extends VBox implements ViewMixin {
     private final RootPM rootPM;

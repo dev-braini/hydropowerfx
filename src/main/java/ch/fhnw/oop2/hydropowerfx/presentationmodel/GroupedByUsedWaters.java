@@ -5,7 +5,7 @@ import javafx.beans.property.*;
 /**
  * Model class for a PowerStation.
  *
- * @author Marco Peter & Markus Winter
+ * @author Markus Winter
  */
 public class GroupedByUsedWaters {
     private final StringProperty   usedWaters;

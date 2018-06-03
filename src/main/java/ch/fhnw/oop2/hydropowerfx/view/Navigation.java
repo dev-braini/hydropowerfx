@@ -11,7 +11,7 @@ import javafx.scene.control.*;
 import javafx.util.Duration;
 
 /*
- * @author: Marco Peter & Markus Winter
+ * @author: Markus Winter
  */
 public class Navigation extends BorderPane implements ViewMixin {
     private RootPM          rootPM;

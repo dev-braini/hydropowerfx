@@ -2,13 +2,18 @@ package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStation;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 /*
- * @author: Marco Peter & Markus Winter
+ * @author: Markus Winter
  */
 public class PowerStationTable extends TableView implements ViewMixin {
     private final RootPM rootPM;
@@ -41,6 +46,8 @@ public class PowerStationTable extends TableView implements ViewMixin {
     @Override
     public void layoutControls() {
         this.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        this.setEditable(true);
+
         tableCol0.setText("Name");            tableCol0.getStyleClass().add("col-name"); tableCol0.setMinWidth(140);
         tableCol1.setText("");                tableCol1.getStyleClass().add("col-canton"); tableCol1.setMinWidth(38); tableCol1.setMaxWidth(38); tableCol1.setResizable(false);
 
@@ -54,7 +61,10 @@ public class PowerStationTable extends TableView implements ViewMixin {
                 tableCol3
         );
 
+        tableCol0.setCellFactory(TextFieldTableCell.forTableColumn());
+        tableCol0.setOnEditCommit(t -> rootPM.setName(t.getNewValue()));
         tableCol0.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+
         tableCol1.setCellValueFactory(new PropertyValueFactory<>("canton"));
         tableCol1.setCellFactory(tc -> {
             TableCell<PowerStation, String> cell = new TableCell<>() {
@@ -75,7 +85,11 @@ public class PowerStationTable extends TableView implements ViewMixin {
             };
             return cell;
         });
+        tableCol2.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        tableCol2.setOnEditCommit(t -> rootPM.setPerformance(t.getNewValue()));
         tableCol2.setCellValueFactory(cellData -> cellData.getValue().performanceProperty().asObject());
+        tableCol3.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        tableCol3.setOnEditCommit(t -> rootPM.setFirstCommissioning(t.getNewValue()));
         tableCol3.setCellValueFactory(cellData -> cellData.getValue().firstCommissioningProperty().asObject());
 
         this.setItems(this.rootPM.getPowerStationList());
