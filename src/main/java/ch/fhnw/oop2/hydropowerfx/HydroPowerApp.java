@@ -57,7 +57,7 @@ public class HydroPowerApp extends Application {
 	   	});
 
 
-		primaryStage.getIcons().add(new Image("file:///" + System.getProperty("user.dir") + "/src/main/resources/icons/favicon.png"));
+		primaryStage.getIcons().add(new Image("file:///" + System.getProperty("user.dir") + "/src/main/resources/icons/logo.png"));
 		primaryStage.show();
 	}
 
