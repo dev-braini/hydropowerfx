@@ -17,6 +17,7 @@ public class SpecViewMap extends VBox implements ViewMixin {
 
     public SpecViewMap(RootPM model) {
         this.rootPM = model;
+        this.setVisible(false);
 
         init();
     }
@@ -67,7 +68,6 @@ public class SpecViewMap extends VBox implements ViewMixin {
         }
 
         public void setCoordinates() {
-            System.out.println(rootPM.getName());
             webEngine.executeScript("" +
                     "window.lat = " + rootPM.getDegreeOfLatitude() + ";" +
                     "window.lon = " + rootPM.getDegreeOfLongitude() + ";" +

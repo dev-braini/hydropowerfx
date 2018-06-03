@@ -85,6 +85,7 @@ public class PowerStationTable extends TableView implements ViewMixin {
                     if(newValue != null) {
                         rootPM.showPowerStationDetails((PowerStation)newValue);
                         rootPM.setPowerStationTableSelectedIndex(this.getSelectionModel().getSelectedIndex());
+                        rootPM.setButtonNavControlRemoveActive(true);
                     }
                 });
 
@@ -94,7 +95,6 @@ public class PowerStationTable extends TableView implements ViewMixin {
                 });
 
         this.getSortOrder().setAll(tableCol0);
-        this.getSelectionModel().selectFirst();
     }
 
     @Override

@@ -87,7 +87,7 @@ public class Navigation extends BorderPane implements ViewMixin {
 
         setButtonIcon(ButtonNav_ControlSave,   "control-save", "inactive");
         setButtonIcon(ButtonNav_ControlAdd,    "control-add", "");
-        setButtonIcon(ButtonNav_ControlRemove, "control-remove", "");
+        setButtonIcon(ButtonNav_ControlRemove, "control-remove", "inactive");
         setButtonIcon(ButtonNav_ControlUndo,   "control-undo", "inactive");
         setButtonIcon(ButtonNav_ControlRedo,   "control-redo", "inactive");
 
@@ -157,10 +157,14 @@ public class Navigation extends BorderPane implements ViewMixin {
             rootPM.addToPowerStationList();
             powerStationTable.getSelectionModel().selectLast();
             powerStationTable.scrollTo(powerStationTable.getSelectionModel().getFocusedIndex());
+            ButtonNav_ControlAdd.setSelected(false);
         });
 
         ButtonNav_ControlRemove.setOnAction(event -> {
-            rootPM.removeFromPowerStationList(powerStationTable.getSelectionModel().getSelectedIndex());
+            if(!ButtonNav_ControlRemove.getStyleClass().contains("inactive")) {
+                rootPM.removeFromPowerStationList(powerStationTable.getSelectionModel().getSelectedIndex());
+            }
+            ButtonNav_ControlRemove.setSelected(false);
         });
 
         navigation_Left.getChildren().addAll(
@@ -210,6 +214,13 @@ public class Navigation extends BorderPane implements ViewMixin {
                 (observable, oldValue, newValue) -> {
                     if(newValue) ButtonNav_ControlRedo.getStyleClass().remove("inactive");
                     else ButtonNav_ControlRedo.getStyleClass().add("inactive");
+                }
+        );
+
+        rootPM.buttonNavControlRemoveActiveProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if(newValue) ButtonNav_ControlRemove.getStyleClass().remove("inactive");
+                    else ButtonNav_ControlRemove.getStyleClass().add("inactive");
                 }
         );
     }

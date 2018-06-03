@@ -40,6 +40,7 @@ public class SpecViewText extends VBox implements ViewMixin {
     public SpecViewText(RootPM model, TableView powerStationTable) {
         this.rootPM = model;
         this.powerStationTable = powerStationTable;
+        this.setVisible(false);
 
         init();
     }

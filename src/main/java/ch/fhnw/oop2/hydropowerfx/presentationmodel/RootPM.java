@@ -46,6 +46,8 @@ public class RootPM {
     private final BooleanProperty                      buttonNavControlSaveActive      = new SimpleBooleanProperty();
     private final BooleanProperty                      buttonNavControlUndoActive      = new SimpleBooleanProperty();
     private final BooleanProperty                      buttonNavControlRedoActive      = new SimpleBooleanProperty();
+    private final BooleanProperty                      buttonNavControlRemoveActive    = new SimpleBooleanProperty();
+
 
     public RootPM() {
         fileHandler.readPowerStations("/src/main/resources/data/HYDRO_POWERSTATION.csv", powerStationList);
@@ -97,10 +99,12 @@ public class RootPM {
         setButtonNavControlSaveActive(true);
 
         if(powerStationListHistoryIndex.get() == 0) {
-            System.out.println("setButtonNavControlUndoActive - false");
             setButtonNavControlUndoActive(false);
         }
 
+        updateGroupedByCanton();
+        updateGroupedByUsedWaters();
+        updateGroupedByPerformance();
     }
 
     public void redoPowerStationList() {
@@ -117,6 +121,10 @@ public class RootPM {
 
         if(powerStationListHistoryIndex.get() == powerStationListHistory.size() - 1) setButtonNavControlRedoActive(false);
         if(powerStationListHistoryIndex.get() > 0) setButtonNavControlUndoActive(true);
+
+        updateGroupedByCanton();
+        updateGroupedByUsedWaters();
+        updateGroupedByPerformance();
 
     }
 
@@ -151,20 +159,34 @@ public class RootPM {
     }
 
     public int getPowerStationIndexByCanton(PowerStation ps) {
-        return 1;
+        for (int i = 0; i < groupedByCanton.size(); i++) {
+            GroupedByCanton item = groupedByCanton.get(i);
+
+            if (ps != null && item.getCantonShortcut().equals(ps.getCanton())) {
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     public int getPowerStationIndexByUsedWaters(PowerStation ps) {
-        return 2;
+        for (int i = 0; i < groupedByUsedWaters.size(); i++) {
+            GroupedByUsedWaters item = groupedByUsedWaters.get(i);
+
+            if(ps != null && item.getUsedWaters().contains(ps.getUsedWaters() )) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public int getPowerStationIndexByPerformance(PowerStation ps) {
-
-
         for (int i = 0; i < groupedByPerformance.size(); i++) {
             GroupedByPerformance item = groupedByPerformance.get(i);
 
-            if(ps.getPerformance() >= item.getPerformanceMin() && ps.getPerformance() < item.getPerformanceMax()) {
+            if(ps != null && ps.getPerformance() >= item.getPerformanceMin() && ps.getPerformance() < item.getPerformanceMax()) {
                 return i;
             }
         }
@@ -175,6 +197,7 @@ public class RootPM {
     public void addToPowerStationList() {
         int id = getHighestIdFromPowerStationList() + 1;
         powerStationList.add(new PowerStation(id));
+        setButtonNavControlSaveActive(true);
     }
 
     public void removeFromPowerStationList(int index) {
@@ -191,6 +214,8 @@ public class RootPM {
         if (result.get() == buttonYes){
             powerStationList.remove(index);
         }
+
+        setButtonNavControlSaveActive(true);
     }
 
     // all getters and setters
@@ -230,6 +255,19 @@ public class RootPM {
 
     public void setButtonNavControlRedoActive(Boolean buttonNavControlRedoActive) {
         this.buttonNavControlRedoActive.set(buttonNavControlRedoActive);
+    }
+
+
+    public Boolean getButtonNavControlRemoveActive() {
+        return buttonNavControlRemoveActive.get();
+    }
+
+    public BooleanProperty buttonNavControlRemoveActiveProperty() {
+        return buttonNavControlRemoveActive;
+    }
+
+    public void setButtonNavControlRemoveActive(Boolean buttonNavControlRemoveActive) {
+        this.buttonNavControlRemoveActive.set(buttonNavControlRemoveActive);
     }
 
 

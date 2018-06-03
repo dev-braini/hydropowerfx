@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStation;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -84,6 +85,17 @@ public class RootPanel extends StackPane implements ViewMixin {
         rootVBox.getChildren().add(1, contentSplitPaneVertical);
 
         this.getChildren().add(rootVBox);
+    }
+
+    @Override
+    public void setupValueChangedListeners() {
+        powerStationTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    specViewText.setVisible(true);
+                    specViewMap.setVisible(true);
+                    specViewGrouped.setVisible(true);
+                    specViewTime.setVisible(true);
+                });
     }
 
     @Override

@@ -38,6 +38,7 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
     public SpecViewGrouped(RootPM model, TableView powerStationTable) {
         this.rootPM = model;
         this.powerStationTable = powerStationTable;
+        this.setVisible(false);
 
         init();
     }
@@ -76,12 +77,6 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
         labelWater.setText("Nach Gewässer (mind. 3 Kraftwerke)");
         labelPerformance.getStyleClass().add("table-label");
         labelPerformance.setText("Nach Leistung (MW)");
-
-        /*cantonTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        cantonTable_Col0.setText("    ");
-        cantonTable_Col1.setText("Kanton");
-        cantonTable_Col2.setText("Leistung Total (MW)");
-        cantonTable_Col3.setText("Anzahl");*/
 
         waterTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         waterTable.getStyleClass().add("groupedView");
@@ -156,8 +151,12 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
                     cantonTable.getSelectionModel().select(cantonRow);
                     cantonTable.scrollTo(cantonRow);
 
-                    waterTable.getSelectionModel().select(usedWatersRow);
-                    waterTable.scrollTo(usedWatersRow);
+                    if(usedWatersRow != -1) {
+                        waterTable.getSelectionModel().select(usedWatersRow);
+                        waterTable.scrollTo(usedWatersRow);
+                    } else {
+                        waterTable.getSelectionModel().clearSelection();
+                    }
 
                     performanceTable.getSelectionModel().select(performanceRow);
                     performanceTable.scrollTo(performanceRow);

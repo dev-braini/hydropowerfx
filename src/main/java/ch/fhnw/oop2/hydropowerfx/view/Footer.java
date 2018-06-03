@@ -97,15 +97,14 @@ public class Footer extends TableView implements ViewMixin {
         this.setItems(this.rootPM.getPowerStationListByCanton());
 
         this.getSortOrder().setAll(tableCol1);
-        this.getSelectionModel().selectFirst();
     }
 
     @Override
     public void setupValueChangedListeners() {
         powerStationTable.getSelectionModel().selectedItemProperty().addListener(
             (observable, oldValue, newValue) -> {
-                this.getSelectionModel().select(rootPM.getPowerStationIndexByCanton((PowerStation)newValue));
-                this.scrollTo(rootPM.getPowerStationIndexByCanton((PowerStation)newValue));
+                this.getSelectionModel().select(rootPM.getPowerStationIndexByCanton((PowerStation) newValue));
+                this.scrollTo(rootPM.getPowerStationIndexByCanton((PowerStation) newValue));
             });
     }
 

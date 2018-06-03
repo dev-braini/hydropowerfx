@@ -45,6 +45,7 @@ public class SpecViewTime extends VBox implements ViewMixin {
     public SpecViewTime(RootPM model, TableView powerStationTable) {
         this.rootPM = model;
         this.powerStationTable = powerStationTable;
+        this.setVisible(false);
 
         init();
     }
