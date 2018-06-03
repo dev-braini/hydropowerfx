@@ -63,7 +63,7 @@ public class PowerStation {
                 (double)  Double.parseDouble(data.get(10)),
                 (String)  data.get(11),
                 (String)  data.get(12),
-                (data.size() > 13) ? (String) data.get(13) : null
+                (String) data.get(13)
         );
     }
 

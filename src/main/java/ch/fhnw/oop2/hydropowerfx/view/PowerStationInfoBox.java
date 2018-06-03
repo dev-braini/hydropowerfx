@@ -46,7 +46,7 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
         infoLabel_LocationCanton     = new HBox();
         infoLabel_Performance        = new Label("106.0 MW");
         infoLabel_FirstCommissioning = new Label("1914");
-        infoImage                    = new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Wasserkraftwerk_Laufenburg1.jpg/1200px-Wasserkraftwerk_Laufenburg1.jpg", true);
+        infoImage                    = new Image("https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif", true);
         infoImageView                = new ImageView(infoImage);
         spacer                       = new Pane();
     }
@@ -83,6 +83,13 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
         infoLabel_Canton.textProperty().bind(rootPM.cantonProperty());
         infoLabel_Performance.textProperty().bind(Bindings.convert(rootPM.performanceProperty()));
         infoLabel_FirstCommissioning.textProperty().bind(Bindings.convert(rootPM.firstCommissioningProperty()));
+
+        rootPM.imageUrlProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue == null || newValue.isEmpty()) newValue = "https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif";
+
+            infoImage = new Image(newValue, true);
+            infoImageView.setImage(infoImage);
+        }));
 
         //infoImageView
         /*if(rootPM.imageUrlProperty().toString() != "") {

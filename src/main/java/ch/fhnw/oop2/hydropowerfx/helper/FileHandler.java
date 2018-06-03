@@ -26,7 +26,7 @@ public class FileHandler {
             while (line != null) {
                 line = bufferedReader.readLine();
                 if (line != null) {
-                    List<String> items = Arrays.asList(line.split(";"));
+                    List<String> items = Arrays.asList(line.split(";", -1));
                     powerStationList.add(new PowerStation(items));
                 }
             }
