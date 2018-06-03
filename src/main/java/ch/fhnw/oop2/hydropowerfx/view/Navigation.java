@@ -119,7 +119,7 @@ public class Navigation extends BorderPane implements ViewMixin {
         ViewButtonGroup.selectedToggleProperty().addListener((ov, t, t1) -> {
             ToggleButton ButtonOld = (ToggleButton) ViewButtonGroup.getUserData();
 
-            if(t1 != null) {
+            if(t1 != null && contentSplitPaneHorizontal.getItems().get(1).getId() != "spec-view-nothing-selected") {
                 ToggleButton ButtonClicked = (ToggleButton) t1.getToggleGroup().getSelectedToggle();
 
                 if (ButtonOld != ButtonClicked) {

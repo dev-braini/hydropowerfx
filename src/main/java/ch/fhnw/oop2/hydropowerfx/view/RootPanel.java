@@ -94,15 +94,16 @@ public class RootPanel extends StackPane implements ViewMixin {
         labelWelcomeTitle.setText("HydroPowerFX");
 
         labelWelcomeText.setFont(new Font("Arial", 16));
-        labelWelcomeText.setPadding(new Insets(0, 0, 66, 0));
+        labelWelcomeText.setPadding(new Insets(0, 0, 64, 0));
         labelWelcomeText.setText("OOP2 Projekt FS18 von Markus Winter");
 
         labelChoosePowerStation.setFont(new Font("Arial", 13));
-        labelChoosePowerStation.setPadding(new Insets(142, 0, 0, 0));
+        labelChoosePowerStation.setPadding(new Insets(144, 0, 0, 0));
         labelChoosePowerStation.setText("Bitte wählen Sie links ein Kraftwerk aus um zu starten.");
 
         welcomeBox.getChildren().addAll(labelWelcomeTitle, labelWelcomeText, imageViewLogo, labelChoosePowerStation);
         welcomeBox.setAlignment(Pos.CENTER);
+        specViewNothingSelected.setId("spec-view-nothing-selected");
         specViewNothingSelected.getChildren().add(welcomeBox);
 
         //content wrapper
@@ -134,10 +135,18 @@ public class RootPanel extends StackPane implements ViewMixin {
     public void setupValueChangedListeners() {
         powerStationTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
-                    specViewText.setVisible(true);
-                    specViewMap.setVisible(true);
-                    specViewGrouped.setVisible(true);
-                    specViewTime.setVisible(true);
+                    if(specViewNothingSelected.isVisible()) {
+                        specViewText.setVisible(true);
+                        specViewMap.setVisible(true);
+                        specViewGrouped.setVisible(true);
+                        specViewTime.setVisible(true);
+                        specViewNothingSelected.setVisible(false);
+
+                        Double dividerPosition = contentSplitPaneHorizontal.getDividerPositions()[0];
+                        contentSplitPaneHorizontal.getItems().remove(specViewNothingSelected);
+                        contentSplitPaneHorizontal.setDividerPositions(dividerPosition);
+                        contentSplitPaneHorizontal.getItems().add(specViewText);
+                    }
                 });
     }
 
