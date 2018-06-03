@@ -6,6 +6,7 @@
 ## Zusatzfeatures
  - Überarbeitung des UI
  - Styling der gesamten Applikation via CSS
+ - Willkommens-Screen
  - Enabling/Disabling aller Buttons und Views
  - Undo/Redo auf "Speichern-Level"
  - bewährte Programmstruktur -> klare Trennung und unabhängige UI-Elemente
