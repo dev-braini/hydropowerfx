@@ -1,9 +1,3 @@
 - MapView:     Reorder rows if necessary
 
-- Search
-- Show number of records in main table
-- Refactor code duplication
 - Change from for to stream if possible (PM)
-
-- (Filter)
-- (Unit-Tests -> PM)

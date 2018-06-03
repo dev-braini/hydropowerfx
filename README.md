@@ -20,6 +20,7 @@
  - Editierbare Tabelle
  - Input-Validierung bei Double und Int Feldern (falsche Eingabe wird unterbunden)
  - Eigenes Applikations-Icon
+ - JUnit Tests
  - Keyboard-Shortcuts
      Save         = Ctrl + S
      Add          = Ctrl + +
