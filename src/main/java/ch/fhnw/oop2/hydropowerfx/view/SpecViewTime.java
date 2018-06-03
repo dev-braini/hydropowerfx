@@ -113,7 +113,8 @@ public class SpecViewTime extends VBox implements ViewMixin {
                         rootPM.getPowerStationIndex(selectedEL)
                 ));
 
-                //.getChildren().get(selectedIndex).getStyleClass().add("timeview-active");
+                timeView.getChildren().forEach(item -> item.getStyleClass().remove("timeview-active"));
+                timeView.getChildren().get(rootPM.getPowerStationIndex(selectedEL)).getStyleClass().add("timeview-active");
 
             }
         });

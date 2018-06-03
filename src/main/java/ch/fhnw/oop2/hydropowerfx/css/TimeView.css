@@ -22,10 +22,17 @@
     -fx-alignment: top-left;
 }
 
-/*.timeview-active {
-    -fx-border-width: 2px;
-    -fx-border-color: red;
-}*/
+.timeview-active .timeView-label-year-0,
+.timeview-active .timeView-label-year-1,
+.timeview-active .timeView-label-name-0,
+.timeview-active .timeView-label-name-1 {
+    -fx-font-weight: bold;
+}
+
+.timeview-active .timeView-label-name-0,
+.timeview-active .timeView-label-name-1 {
+    -fx-text-fill: #5086d8;
+}
 
 .timeView-label-name-0, .timeView-label-name-1 {
     -fx-text-fill: black;

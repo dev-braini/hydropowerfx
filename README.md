@@ -12,7 +12,7 @@
  - Custom Controls aus der CUIE-Klasse
  - Zusätzliche View "Map": Anzeige des Standorts auf Google Maps
  - Zusätzliche View "Grouped": Gruppierte Ansicht nach Gewässer und Leistungsumfang
- - Zusätzliche View "Time": Animierte Ansicht eines Zeitstrahls der Kraftwerke
+ - Zusätzliche View "Time": Animierte Ansicht eines Zeitstrahls der Kraftwerke (beta)
  - Animation beim Wechsel einer View
  - Rückfrage-System beim Löschen eines Kraftwerks und beim Verlassen des Programms ohne zu speichern
  - Anzeige des Bildes im Kraftwerk-Header
