@@ -1,8 +1,25 @@
 # OOP2 Programmierprojekt 2Ibb/2iCbb FS18
 
 ## Bearbeitet von
- - Marco Peter
  - Markus Winter
+
+## Zusatzfeatures
+ - Überarbeitung des UI
+ - Styling der gesamten Applikation via CSS
+ - Enabling/Disabling aller Buttons und Views
+ - Undo/Redo auf "Speichern-Level"
+ - bewährte Programmstruktur -> klare Trennung und unabhängige UI-Elemente
+ - Custom Controls aus der CUIE-Klasse
+ - Zusätzliche View "Map": Anzeige des Standorts auf Google Maps
+ - Zusätzliche View "Grouped": Gruppierte Ansicht nach Gewässer und Leistungsumfang
+ - Zusätzliche View "Time": Animierte Ansicht eines Zeitstrahls der Kraftwerke
+ - Animation beim Wechsel einer View
+ - Rückfrage-System beim Löschen eines Kraftwerks und beim Verlassen des Programms ohne zu speichern
+ - Anzeige des Bildes im Kraftwerk-Header
+ - Anzeige des Kantonskürzels mittels Kantonswappen
+ - Editierbare Tabelle
+ - Input-Validierung bei Double und Int Feldern (falsche Eingabe wird unterbunden)
+ - Eigenes Applikations-Icon
 
 ## Abgabe
 - Mittwoch, 6.6.2018, 18:00 Uhr
