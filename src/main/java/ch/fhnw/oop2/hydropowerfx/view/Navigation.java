@@ -3,9 +3,14 @@ package ch.fhnw.oop2.hydropowerfx.view;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.util.Duration;
@@ -15,6 +20,7 @@ import javafx.util.Duration;
  */
 public class Navigation extends BorderPane implements ViewMixin {
     private RootPM          rootPM;
+    private StackPane       rootPanel;
     private TableView       powerStationTable;
     private HBox            navigation_Left,
                             navigation_Right;
@@ -42,8 +48,9 @@ public class Navigation extends BorderPane implements ViewMixin {
 
     private SplitPane       contentSplitPaneHorizontal;
 
-    public Navigation(RootPM rootPM, TableView powerStationTable, VBox mainContentRight_Text, VBox mainContentRight_Map, VBox mainContentRight_Grouped, VBox mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
+    public Navigation(RootPM rootPM, StackPane rootPanel, TableView powerStationTable, VBox mainContentRight_Text, VBox mainContentRight_Map, VBox mainContentRight_Grouped, VBox mainContentRight_Time, SplitPane contentSplitPaneHorizontal) {
         this.rootPM                     = rootPM;
+        this.rootPanel                  = rootPanel;
         this.powerStationTable          = powerStationTable;
         this.mainContentRight_Text      = mainContentRight_Text;
         this.mainContentRight_Map       = mainContentRight_Map;
@@ -195,7 +202,6 @@ public class Navigation extends BorderPane implements ViewMixin {
 
     @Override
     public void setupValueChangedListeners() {
-
         rootPM.buttonNavControlSaveActiveProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if(newValue) ButtonNav_ControlSave.getStyleClass().remove("inactive");
@@ -223,6 +229,57 @@ public class Navigation extends BorderPane implements ViewMixin {
                     else ButtonNav_ControlRemove.getStyleClass().add("inactive");
                 }
         );
+
+        this.rootPanel.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            final KeyCombination keyCombSave = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombAdd = new KeyCodeCombination(KeyCode.ADD, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombRemove = new KeyCodeCombination(KeyCode.SUBTRACT, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombUndo = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombRedo = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombViewText = new KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombViewMap = new KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombViewGrouped = new KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.CONTROL_DOWN);
+            final KeyCombination keyCombViewTime = new KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.CONTROL_DOWN);
+
+            public void handle(KeyEvent ke) {
+                if (keyCombSave.match(ke)) {
+                    ButtonNav_ControlSave.fire();
+                    ke.consume();
+                }
+                if (keyCombAdd.match(ke)) {
+                    ButtonNav_ControlAdd.fire();
+                    ke.consume();
+                }
+                if (keyCombRemove.match(ke)) {
+                    ButtonNav_ControlRemove.fire();
+                    ke.consume();
+                }
+                if (keyCombUndo.match(ke)) {
+                    ButtonNav_ControlUndo.fire();
+                    ke.consume();
+                }
+                if (keyCombRedo.match(ke)) {
+                    ButtonNav_ControlRedo.fire();
+                    ke.consume();
+                }
+                if (keyCombViewText.match(ke)) {
+                    ButtonNav_ViewText.fire();
+                    ke.consume();
+                }
+                if (keyCombViewMap.match(ke)) {
+                    ButtonNav_ViewMap.fire();
+                    ke.consume();
+                }
+                if (keyCombViewGrouped.match(ke)) {
+                    ButtonNav_ViewGrouped.fire();
+                    ke.consume();
+                }
+                if (keyCombViewTime.match(ke)) {
+                    ButtonNav_ViewTime.fire();
+                    ke.consume();
+                }
+            }
+        });
     }
 
     @Override

@@ -80,7 +80,6 @@ public class RootPM {
         powerStationListHistory.add(powerStationListNew);
 
         powerStationListHistoryIndex.set(powerStationListHistory.size()-1);
-
         setButtonNavControlSaveActive(false);
         setButtonNavControlUndoActive(true);
     }
@@ -439,6 +438,26 @@ public class RootPM {
     public void updatePowerStation(int index) {
         PowerStation selectedPS = getPowerStationList().get(index);
 
+        //set save button active only if something really changed
+        if(
+            selectedPS.getId() != id.get() ||
+            selectedPS.getName() != name.get() ||
+            selectedPS.getType() != type.get() ||
+            selectedPS.getLocation() != location.get() ||
+            selectedPS.getCanton() != canton.get() ||
+            selectedPS.getWaterVolume() != waterVolume.get() ||
+            selectedPS.getPerformance() != performance.get() ||
+            selectedPS.getFirstCommissioning() != firstCommissioning.get() ||
+            selectedPS.getLastCommissioning() != lastCommissioning.get() ||
+            selectedPS.getDegreeOfLatitude() != degreeOfLatitude.get() ||
+            selectedPS.getDegreeOfLongitude() != degreeOfLongitude.get() ||
+            selectedPS.getStatus() != status.get() ||
+            selectedPS.getUsedWaters() != usedWaters.get() ||
+            selectedPS.getImageUrl() != imageUrl.get()
+        ) {
+            setButtonNavControlSaveActive(true);
+        }
+
         selectedPS.setId(id.get());
         selectedPS.setName(name.get());
         selectedPS.setType(type.get());
@@ -453,8 +472,6 @@ public class RootPM {
         selectedPS.setStatus(status.get());
         selectedPS.setUsedWaters(usedWaters.get());
         selectedPS.setImageUrl(imageUrl.get());
-
-        setButtonNavControlSaveActive(true);
 
         updateGroupedByCanton();
         updateGroupedByUsedWaters();

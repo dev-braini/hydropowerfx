@@ -23,12 +23,9 @@ public class PowerStationTextField extends HBox {
         boolean isNumeric = numeric.length > 0 ? numeric[0] : false;
 
         if(isNumeric) {
-            textField.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (!newValue.matches("([0-9]+([.][0-9]*)?|[.][0-9]+)")) {
-                        textField.setText(oldValue);
-                    }
+            textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("([0-9]+([.][0-9]*)?|[.][0-9]+)")) {
+                    textField.setText(oldValue);
                 }
             });
         }

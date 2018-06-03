@@ -1,6 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStation;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -57,7 +56,7 @@ public class RootPanel extends StackPane implements ViewMixin {
 
         footer                     = new Footer(rootPM, powerStationTable);
 
-        navigation                 = new Navigation(rootPM, powerStationTable, specViewText, specViewMap, specViewGrouped, specViewTime, contentSplitPaneHorizontal);
+        navigation                 = new Navigation(rootPM, this, powerStationTable, specViewText, specViewMap, specViewGrouped, specViewTime, contentSplitPaneHorizontal);
     }
 
     @Override
