@@ -20,6 +20,16 @@
  - Editierbare Tabelle
  - Input-Validierung bei Double und Int Feldern (falsche Eingabe wird unterbunden)
  - Eigenes Applikations-Icon
+ - Keyboard-Shortcuts
+     Save         = Ctrl + S
+     Add          = Ctrl + +
+     Remove       = Ctrl + -
+     Undo         = Ctrl + Z
+     Redo         = Ctrl + Y
+     View Text    = Ctrl + 1
+     View Map     = Ctrl + 2
+     View Grouped = Ctrl + 3
+     View Time    = Ctrl + 4
 
 ## Abgabe
 - Mittwoch, 6.6.2018, 18:00 Uhr
