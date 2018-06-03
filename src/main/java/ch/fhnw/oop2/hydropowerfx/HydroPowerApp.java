@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
@@ -32,32 +33,31 @@ public class HydroPowerApp extends Application {
 		Platform.setImplicitExit(false);
 
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-		   public void handle(WindowEvent we) {Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			if(rootPM.getButtonNavControlSaveActive()) {
-				alert.setTitle("Close Confirmation Dialog");
-				alert.setHeaderText("Sie haben noch ungespeicherte Änderungen!");
+			public void handle(WindowEvent we) {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				if(rootPM.getButtonNavControlSaveActive()) {
+					alert.setTitle("Close Confirmation Dialog");
+					alert.setHeaderText("Sie haben noch ungespeicherte Änderungen!");
 
-				ButtonType buttonDiscard = new ButtonType("Ohne speichern verlassen");
-				ButtonType buttonSave = new ButtonType("Speichern und verlassen");
-				ButtonType buttonCancel = new ButtonType("Abbrechen");
+					ButtonType buttonDiscard = new ButtonType("Ohne speichern verlassen");
+					ButtonType buttonSave = new ButtonType("Speichern und verlassen");
+					ButtonType buttonCancel = new ButtonType("Abbrechen");
 
-				alert.getButtonTypes().setAll(buttonDiscard, buttonSave, buttonCancel);
+					alert.getButtonTypes().setAll(buttonDiscard, buttonSave, buttonCancel);
 
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == buttonDiscard) {
-					Platform.exit();
-				}
-				if (result.get() == buttonSave) {
-					rootPM.savePowerStationList();
-					Platform.exit();
-				}
-				if (result.get() == buttonCancel) {
-					we.consume();
-				}
-			} else Platform.exit();
-		   }
-	   });
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == buttonDiscard) Platform.exit();
+					if (result.get() == buttonSave) {
+						rootPM.savePowerStationList();
+						Platform.exit();
+					}
+					if (result.get() == buttonCancel) we.consume();
+				} else Platform.exit();
+			}
+	   	});
 
+
+		primaryStage.getIcons().add(new Image("file:///" + System.getProperty("user.dir") + "/src/main/resources/icons/favicon.png"));
 		primaryStage.show();
 	}
 
