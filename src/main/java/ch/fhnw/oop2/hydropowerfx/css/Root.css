@@ -42,3 +42,24 @@
     -fx-padding: 0 13px 0 0;
 }
 
+.list-cell:filled:selected,
+.tree-cell:filled:selected,
+.table-row-cell:filled:selected,
+.tree-table-row-cell:filled:selected,
+.table-row-cell:filled > .table-cell:selected,
+.tree-table-row-cell:filled > .tree-table-cell:selected {
+    -fx-background: black;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #5086d8;
+    -fx-text-fill: #ffffff !important;
+}
+
+.groupedView .table-column {
+    -fx-padding: 8 7 8 7;
+}
+
+.groupedView.withCanton .table-column {
+    -fx-padding: 7 7 4 7;
+}

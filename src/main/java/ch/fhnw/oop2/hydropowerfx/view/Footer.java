@@ -16,14 +16,16 @@ import javafx.scene.image.ImageView;
  */
 public class Footer extends TableView implements ViewMixin {
     private final RootPM rootPM;
+    private TableView    powerStationTable;
 
     private TableColumn<GroupedByCanton, String> tableCol0;
     private TableColumn<GroupedByCanton, String>  tableCol1;
     private TableColumn<GroupedByCanton, Double>  tableCol2;
     private TableColumn<GroupedByCanton, Integer> tableCol3;
 
-    public Footer(RootPM rootPM) {
+    public Footer(RootPM rootPM, TableView powerStationTable) {
         this.rootPM = rootPM;
+        this.powerStationTable = powerStationTable;
 
         init();
     }
@@ -51,6 +53,7 @@ public class Footer extends TableView implements ViewMixin {
         tableCol2.setText("Leistung Total (MW)");   tableCol2.getStyleClass().addAll("col-performance", "align-center-right");  tableCol2.setMinWidth(148); tableCol2.setMaxWidth(148); tableCol2.setResizable(false);
         tableCol3.setText("Anzahl");  tableCol3.getStyleClass().addAll("col-first-commissioning", "align-center-right");  tableCol3.setMinWidth(90); tableCol3.setMaxWidth(90); tableCol3.setResizable(false);
         this.setId("footer-table");
+        this.getStyleClass().addAll("groupedView", "withCanton");
         this.getColumns().addAll(
                 tableCol0,
                 tableCol1,
@@ -95,6 +98,15 @@ public class Footer extends TableView implements ViewMixin {
 
         this.getSortOrder().setAll(tableCol1);
         this.getSelectionModel().selectFirst();
+    }
+
+    @Override
+    public void setupValueChangedListeners() {
+        powerStationTable.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldValue, newValue) -> {
+                this.getSelectionModel().select(rootPM.getPowerStationIndexByCanton((PowerStation)newValue));
+                this.scrollTo(rootPM.getPowerStationIndexByCanton((PowerStation)newValue));
+            });
     }
 
     @Override

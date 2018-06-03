@@ -34,6 +34,10 @@
     -fx-background-radius: 0;
 }
 
+.info-label-location-canton {
+    -fx-spacing: 7px;
+}
+
 /*#mainbox .text-field .list-cell {
     -fx-text-fill: #111111;
 }

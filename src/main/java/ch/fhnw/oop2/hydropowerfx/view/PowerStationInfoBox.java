@@ -54,7 +54,8 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
     @Override
     public void layoutControls() {
         infoLabel_LocationCanton.getChildren().addAll(infoLabel_Location, infoLabel_Canton);
-        infoLabel_LocationCanton.setSpacing(7);
+        infoLabel_LocationCanton.getStyleClass().add("info-label-location-canton");
+        //infoLabel_LocationCanton.setSpacing(7);
         info_LabelWrapper.setId("info-labels");
         infoLabel_Name.getStyleClass().add("info-label-title");
         info_LabelWrapper.getChildren().addAll(

@@ -1,9 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.GroupedByCanton;
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.GroupedByPerformance;
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.GroupedByUsedWaters;
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.*;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -21,24 +18,26 @@ import javax.swing.*;
  */
 public class SpecViewGrouped extends VBox implements ViewMixin {
     private final RootPM rootPM;
-    private Label       labelCanton;
-    private Label       labelWater;
-    private Label       labelPerformance;
+    private TableView    powerStationTable;
+    private Label        labelCanton;
+    private Label        labelWater;
+    private Label        labelPerformance;
 
-    private TableView   cantonTable;
+    private TableView    cantonTable;
 
-    private TableView   waterTable;
-    private TableColumn<GroupedByUsedWaters, String> waterTable_Col0;
-    private TableColumn<GroupedByUsedWaters, Double> waterTable_Col1;
+    private TableView    waterTable;
+    private TableColumn<GroupedByUsedWaters, String>  waterTable_Col0;
+    private TableColumn<GroupedByUsedWaters, Double>  waterTable_Col1;
     private TableColumn<GroupedByUsedWaters, Integer> waterTable_Col2;
 
-    private TableView   performanceTable;
-    private TableColumn<GroupedByPerformance, String>  performanceTable_Col0;
-    private TableColumn<GroupedByPerformance, Double>  performanceTable_Col1;
+    private TableView    performanceTable;
+    private TableColumn<GroupedByPerformance, String>   performanceTable_Col0;
+    private TableColumn<GroupedByPerformance, Double>   performanceTable_Col1;
     private TableColumn<GroupedByPerformance, Integer>  performanceTable_Col2;
 
-    public SpecViewGrouped(RootPM model) {
+    public SpecViewGrouped(RootPM model, TableView powerStationTable) {
         this.rootPM = model;
+        this.powerStationTable = powerStationTable;
 
         init();
     }
@@ -56,7 +55,7 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
         labelWater             = new Label();
         labelPerformance       = new Label();
 
-        cantonTable            = new Footer(rootPM);
+        cantonTable            = new Footer(rootPM, powerStationTable);
 
         waterTable             = new TableView();
         waterTable_Col0        = new TableColumn<>();
@@ -85,6 +84,7 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
         cantonTable_Col3.setText("Anzahl");*/
 
         waterTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        waterTable.getStyleClass().add("groupedView");
         waterTable.setItems(rootPM.getPowerStationListByUsedWaters());
         waterTable_Col0.setText("Gewässer");
         waterTable_Col1.setText("Leistung Total (MW)"); waterTable_Col1.getStyleClass().add("align-center-right"); waterTable_Col1.setMinWidth(148); waterTable_Col1.setMaxWidth(148); waterTable_Col1.setResizable(false);
@@ -113,6 +113,7 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
 
 
         performanceTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        performanceTable.getStyleClass().add("groupedView");
         performanceTable.setItems(rootPM.getPowerStationListByPerformance());
         performanceTable_Col0.setText("Leistungsumfang (MW)");
         performanceTable_Col1.setText("Leistung Total (MW)");  performanceTable_Col1.getStyleClass().add("align-center-right"); performanceTable_Col1.setMinWidth(148); performanceTable_Col1.setMaxWidth(148); performanceTable_Col1.setResizable(false);
@@ -142,6 +143,25 @@ public class SpecViewGrouped extends VBox implements ViewMixin {
                 labelPerformance,
                 performanceTable
         );
+    }
+
+    @Override
+    public void setupValueChangedListeners() {
+        powerStationTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    int cantonRow = rootPM.getPowerStationIndexByCanton((PowerStation)newValue);
+                    int usedWatersRow = rootPM.getPowerStationIndexByUsedWaters((PowerStation)newValue);
+                    int performanceRow = rootPM.getPowerStationIndexByPerformance((PowerStation)newValue);
+
+                    cantonTable.getSelectionModel().select(cantonRow);
+                    cantonTable.scrollTo(cantonRow);
+
+                    waterTable.getSelectionModel().select(usedWatersRow);
+                    waterTable.scrollTo(usedWatersRow);
+
+                    performanceTable.getSelectionModel().select(performanceRow);
+                    performanceTable.scrollTo(performanceRow);
+                });
     }
 
     @Override

@@ -150,6 +150,28 @@ public class RootPM {
         return groupedByPerformance;
     }
 
+    public int getPowerStationIndexByCanton(PowerStation ps) {
+        return 1;
+    }
+
+    public int getPowerStationIndexByUsedWaters(PowerStation ps) {
+        return 2;
+    }
+
+    public int getPowerStationIndexByPerformance(PowerStation ps) {
+
+
+        for (int i = 0; i < groupedByPerformance.size(); i++) {
+            GroupedByPerformance item = groupedByPerformance.get(i);
+
+            if(ps.getPerformance() >= item.getPerformanceMin() && ps.getPerformance() < item.getPerformanceMax()) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
     public void addToPowerStationList() {
         int id = getHighestIdFromPowerStationList() + 1;
         powerStationList.add(new PowerStation(id));

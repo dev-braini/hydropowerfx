@@ -67,10 +67,11 @@ public class SpecViewMap extends VBox implements ViewMixin {
         }
 
         public void setCoordinates() {
+            System.out.println(rootPM.getName());
             webEngine.executeScript("" +
                     "window.lat = " + rootPM.getDegreeOfLatitude() + ";" +
                     "window.lon = " + rootPM.getDegreeOfLongitude() + ";" +
-                    "window.markerName = '" + rootPM.getName() + "';" +
+                    "window.markerName = \"" + rootPM.getName() + "\";" +
                     "document.goToLocation(window.lat, window.lon, window.markerName);"
             );
         }
