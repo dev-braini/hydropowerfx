@@ -11,9 +11,10 @@
  - Undo/Redo auf "Speichern-Level"
  - bewährte Programmstruktur -> klare Trennung und unabhängige UI-Elemente
  - Custom Controls aus der CUIE-Klasse
- - Zusätzliche View "Map": Anzeige des Standorts auf Google Maps
- - Zusätzliche View "Grouped": Gruppierte Ansicht nach Gewässer und Leistungsumfang
- - Zusätzliche View "Time": Animierte Ansicht eines Zeitstrahls der Kraftwerke (beta)
+ - Zusätzliche Views
+    - "Map": Anzeige des Standorts auf Google Maps
+    - "Grouped": Gruppierte Ansicht nach Gewässer und Leistungsumfang
+    - "Time": Animierte Ansicht eines Zeitstrahls der Kraftwerke (beta)
  - Animation beim Wechsel einer View
  - Rückfrage-System beim Löschen eines Kraftwerks und beim Verlassen des Programms ohne zu speichern
  - Anzeige des Bildes im Kraftwerk-Header
@@ -23,15 +24,22 @@
  - Eigenes Applikations-Icon
  - Minimale JUnit Tests
  - Keyboard-Shortcuts
-     Save         = Ctrl + S
-     Add          = Ctrl + +
-     Remove       = Ctrl + -
-     Undo         = Ctrl + Z
-     Redo         = Ctrl + Y
-     View Text    = Ctrl + 1
-     View Map     = Ctrl + 2
-     View Grouped = Ctrl + 3
-     View Time    = Ctrl + 4
+    - Save         = Ctrl + S
+    - Add          = Ctrl + +
+    - Remove       = Ctrl + -
+    - Undo         = Ctrl + Z
+    - Redo         = Ctrl + Y
+    - View Text    = Ctrl + 1
+    - View Map     = Ctrl + 2
+    - View Grouped = Ctrl + 3
+    - View Time    = Ctrl + 4
+
+## Custom Controls (x2)
+ - **WaterQuantity** von
+    - Valentina Giampa ( valentina.giampa@students.fhnw.ch )
+    - Alessandro Calcagno  ( alessandro.calcagno@students.fhnw.ch )
+ - **SwissLocation** von
+    - Benjamin Denzler (benjamin.denzler@students.fhnw.ch)
 
 ## Abgabe
 - Mittwoch, 6.6.2018, 18:00 Uhr
