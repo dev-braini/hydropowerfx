@@ -40,6 +40,7 @@
     - Alessandro Calcagno  ( alessandro.calcagno@students.fhnw.ch )
  - **SwissLocation** von
     - Benjamin Denzler (benjamin.denzler@students.fhnw.ch)
+    - ACHTUNG: Benötigt "heap size" von mind. 2048MB
 
 ## Abgabe
 - Mittwoch, 6.6.2018, 18:00 Uhr

@@ -1,4 +1,4 @@
-package ch.fhnw.oop2.hydropowerfx.custom_controls.water_quantity_control;
+package ch.fhnw.oop2.hydropowerfx.custom_controls.WaterQuantity;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

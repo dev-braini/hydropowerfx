@@ -1,0 +1,46 @@
+.swissLocationControl {
+    -fx-padding: 5;
+}
+
+.coordinate-label {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 3;
+    -fx-fill: black;
+    -fx-opacity: 0.5;
+}
+
+.kanton-label {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 3;
+    -fx-fill: black;
+}
+
+.coat-of-arms {
+
+}
+
+.location-marker {
+
+}
+
+.opacity-rectangle {
+    -fx-fill: linear-gradient(to top, rgba(255,255,255,0) 0%, rgb(255,255,255) 20%);
+}
+
+.drawing-pane{
+}
+
+.kanton {
+    -fx-fill: #a4a4a4;
+    -fx-stroke: white;
+    -fx-stroke-width: 0.5;
+}
+
+.kanton:hover {
+    -fx-fill: #707070;
+    -fx-cursor: hand;
+}
+
+.kanton:on_chosen {
+    -fx-fill: #b10000;
+}

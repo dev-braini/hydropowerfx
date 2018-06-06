@@ -1,6 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.custom_controls.water_quantity_control.WaterQuantityControl;
+import ch.fhnw.oop2.hydropowerfx.custom_controls.SwissLocation.SwissLocationControl;
+import ch.fhnw.oop2.hydropowerfx.custom_controls.WaterQuantity.WaterQuantityControl;
 import ch.fhnw.oop2.hydropowerfx.helper.PowerStationTextField;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.geometry.HPos;
@@ -39,8 +40,9 @@ public class SpecViewText extends VBox implements ViewMixin {
                                   fieldUsedWaters,
                                   fieldImageUrl;
 
-    ////// WaterQuantityControl //////
+    ////// Custom Controls //////
     private WaterQuantityControl  waterQuantityControl;
+    private SwissLocationControl  swissLocationControl;
 
 
     public SpecViewText(RootPM model, TableView powerStationTable) {
@@ -78,8 +80,9 @@ public class SpecViewText extends VBox implements ViewMixin {
         fieldUsedWaters              = new PowerStationTextField("Genutzte Gewässer", powerStationTable, rootPM);
         fieldImageUrl                = new PowerStationTextField("Bild Speicherort", powerStationTable, rootPM);
 
-        ////// WaterQuantityControl //////
+        ////// Custom Controls //////
         waterQuantityControl = new WaterQuantityControl(0.0, rootPM.getWaterVolumeMax());
+        swissLocationControl = new SwissLocationControl();
     }
 
     @Override
@@ -123,7 +126,8 @@ public class SpecViewText extends VBox implements ViewMixin {
 
         this.getChildren().addAll(
                 infoHBox,
-                mainBox_ScrollWrapper
+                mainBox_ScrollWrapper,
+                swissLocationControl
         );
     }
 
@@ -147,10 +151,17 @@ public class SpecViewText extends VBox implements ViewMixin {
             if(newValue.isEmpty()) fieldName.getTextField().requestFocus();
         });
 
-        ////// WaterQuantityControl //////
-        // Bind presentation model to the water control
+        ////// Custom Controls //////
         waterQuantityControl.valueProperty().bind(rootPM.waterVolumeProperty());
-        //////////////////////////////////
+
+        swissLocationControl.latitudeProperty().bindBidirectional(rootPM.degreeOfLatitudeProperty());
+        swissLocationControl.longitudeProperty().bindBidirectional(rootPM.degreeOfLongitudeProperty());
+        swissLocationControl.kantonProperty().bindBidirectional(rootPM.cantonProperty());
+        /*swissLocationControl.latitudeFocusProperty().bind(rootPM.focusLatitudeProperty());
+        swissLocationControl.longitudeFocusProperty().bind(rootPM.focusLongitudeProperty());*/
+
+        /*rootPM.focusLatitudeProperty().bind(textFieldBreitengrad.focusedProperty());
+        rootPM.focusLongitudeProperty().bind(textFieldLaengengrad.focusedProperty());*/
     }
 
 }

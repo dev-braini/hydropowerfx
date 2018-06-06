@@ -1,4 +1,4 @@
-package ch.fhnw.oop2.hydropowerfx.custom_controls.water_quantity_control;
+package ch.fhnw.oop2.hydropowerfx.custom_controls.WaterQuantity;
 
 import java.util.List;
 import java.util.Locale;
