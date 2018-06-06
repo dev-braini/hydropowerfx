@@ -31,7 +31,7 @@ public class SpecViewMap extends VBox implements ViewMixin {
     @Override
     public void initializeControls() {
         myBrowser = new MyBrowser(rootPM);
-        infoBox = new PowerStationInfoBox(rootPM);
+        infoBox   = new PowerStationInfoBox(rootPM, null);
     }
 
     @Override

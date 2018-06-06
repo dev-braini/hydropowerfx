@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.custom_controls.SwissLocation.SwissLocationControl;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Node;
@@ -14,20 +15,23 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class PowerStationInfoBox extends HBox implements ViewMixin {
-    private final RootPM             rootPM;
-    private VBox                     info_LabelWrapper;
-    private HBox                     infoLabel_LocationCanton;
-    private Label                    infoLabel_Name,
-                                     infoLabel_Location,
-                                     infoLabel_Canton,
-                                     infoLabel_Performance,
-                                     infoLabel_FirstCommissioning;
-    private Image                    infoImage;
-    private ImageView                infoImageView;
-    private Pane                     spacer;
+    private final RootPM               rootPM;
+    private final SwissLocationControl swissLocationControl;
+    private VBox                       info_LabelWrapper;
+    private HBox                       infoLabel_LocationCanton;
+    private Label                      infoLabel_Name,
+                                       infoLabel_Location,
+                                       infoLabel_Canton,
+                                       infoLabel_Performance,
+                                       infoLabel_FirstCommissioning;
+    private Image                      infoImage;
+    private ImageView                  infoImageView;
+    private Pane                       spacer,
+                                       spacer2;
 
-    public PowerStationInfoBox(RootPM rootPM) {
-        this.rootPM = rootPM;
+    public PowerStationInfoBox(RootPM rootPM, SwissLocationControl swissLocationControl) {
+        this.rootPM               = rootPM;
+        this.swissLocationControl = swissLocationControl;
 
         init();
     }
@@ -49,6 +53,7 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
         infoImage                    = new Image("https://upload.wikimedia.org/wikipedia/commons/c/ce/Transparent.gif", true);
         infoImageView                = new ImageView(infoImage);
         spacer                       = new Pane();
+        spacer2                      = new Pane();
     }
 
     @Override
@@ -68,12 +73,18 @@ public class PowerStationInfoBox extends HBox implements ViewMixin {
         infoImageView.setId("info-image");
         infoImageView.setPreserveRatio(true);
         infoImageView.setFitHeight(136);
+        if(swissLocationControl != null) infoImageView.setFitWidth(140);
 
         HBox.setHgrow(spacer, Priority.ALWAYS);
         spacer.setMinSize(10, 1);
+        HBox.setHgrow(spacer2, Priority.ALWAYS);
+        spacer2.setMinSize(10, 1);
 
         this.getStyleClass().add("default-padding");
+
         this.getChildren().addAll(info_LabelWrapper, spacer, infoImageView);
+
+        if(swissLocationControl != null) this.getChildren().addAll(spacer2, swissLocationControl);
     }
 
     @Override

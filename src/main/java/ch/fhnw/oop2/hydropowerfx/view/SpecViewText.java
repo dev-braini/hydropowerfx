@@ -61,8 +61,6 @@ public class SpecViewText extends VBox implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        infoHBox                     = new PowerStationInfoBox(rootPM);
-
         mainBox_ScrollWrapper        = new ScrollPane();
         mainBox                      = new GridPane();
 
@@ -81,8 +79,10 @@ public class SpecViewText extends VBox implements ViewMixin {
         fieldImageUrl                = new PowerStationTextField("Bild Speicherort", powerStationTable, rootPM);
 
         ////// Custom Controls //////
-        waterQuantityControl = new WaterQuantityControl(0.0, rootPM.getWaterVolumeMax());
-        swissLocationControl = new SwissLocationControl();
+        waterQuantityControl         = new WaterQuantityControl(0.0, rootPM.getWaterVolumeMax());
+        swissLocationControl         = new SwissLocationControl();
+
+        infoHBox                     = new PowerStationInfoBox(rootPM, swissLocationControl);
     }
 
     @Override
@@ -126,8 +126,7 @@ public class SpecViewText extends VBox implements ViewMixin {
 
         this.getChildren().addAll(
                 infoHBox,
-                mainBox_ScrollWrapper,
-                swissLocationControl
+                mainBox_ScrollWrapper
         );
     }
 
