@@ -1,0 +1,42 @@
+.waterquantity-control {
+    -fx-padding: 0;
+    -base-color: rgb(2, 138, 204);
+}
+
+.waterquantity-control .background-circle {
+
+    -fx-fill: -base-color;
+    -fx-fill: #60c5ec;
+    -fx-stroke: #000000;
+    -fx-stroke-width: 0;
+    -fx-effect: glow;
+    -fx-effect: dropshadow(one-pass-box, rgb(96, 197, 236), 10, 10, 0, 0);
+}
+
+.waterlevel-control .background-clip-circle {
+    -fx-padding: 0;
+    -fx-stroke: #000000;
+}
+
+.waterlevel-control .air-rectangle {
+    -fx-padding: 0;
+    -fx-fill: white
+}
+
+.waterlevel-control .lightning {
+    -fx-border-color: red;
+    -fx-effect: innershadow(one-pass-box, lightskyblue, 10, 10, 40, 40);
+}
+
+.waterquantity-control .display {
+    -fx-padding: 0;
+    -fx-font-family: 'Anton';
+    -fx-border-color: red;
+    -fx-font-size: 30;
+    -fx-text-fill: #524a3a;
+    -fx-alignment: left;
+    -fx-highlight-fill: red;
+
+}
+
+

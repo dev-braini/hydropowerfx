@@ -145,6 +145,13 @@ public class RootPM {
                 .max().orElse(0);
     }
 
+    public double getWaterVolumeMax() {
+        return powerStationList
+                .stream()
+                .mapToDouble(PowerStation::getWaterVolume)
+                .max().orElse(0);
+    }
+
     public ObservableList<GroupedByCanton> getPowerStationListByCanton() {
         return groupedByCanton;
     }

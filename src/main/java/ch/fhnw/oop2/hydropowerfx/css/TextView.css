@@ -4,12 +4,12 @@
 }
 
 #mainbox {
-    //-fx-hgap: 22px;
+    -fx-vgap: 14px;
     -fx-background-color: white;
 }
 
 #mainbox .label {
-    -fx-label-padding: 8px 0 20px 6px;
+    -fx-label-padding: 8px 0 0 6px;
 }
 
 .mainbox-label {

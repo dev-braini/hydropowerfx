@@ -1,12 +1,15 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.custom_controls.water_quantity_control.WaterQuantityControl;
 import ch.fhnw.oop2.hydropowerfx.helper.PowerStationTextField;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.util.converter.NumberStringConverter;
+
 import java.util.Locale;
 
 /*
@@ -35,6 +38,9 @@ public class SpecViewText extends VBox implements ViewMixin {
                                   fieldStatus,
                                   fieldUsedWaters,
                                   fieldImageUrl;
+
+    ////// WaterQuantityControl //////
+    private WaterQuantityControl  waterQuantityControl;
 
 
     public SpecViewText(RootPM model, TableView powerStationTable) {
@@ -71,6 +77,9 @@ public class SpecViewText extends VBox implements ViewMixin {
         fieldStatus                  = new PowerStationTextField("Status", powerStationTable, rootPM);
         fieldUsedWaters              = new PowerStationTextField("Genutzte Gewässer", powerStationTable, rootPM);
         fieldImageUrl                = new PowerStationTextField("Bild Speicherort", powerStationTable, rootPM);
+
+        ////// WaterQuantityControl //////
+        waterQuantityControl = new WaterQuantityControl(0.0, rootPM.getWaterVolumeMax());
     }
 
     @Override
@@ -80,10 +89,11 @@ public class SpecViewText extends VBox implements ViewMixin {
 
         ColumnConstraints col1 = new ColumnConstraints();
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPrefWidth(65); col2.setMinWidth(65);
+        col2.setPrefWidth(65); col2.setMinWidth(65); col2.setHalignment(HPos.LEFT);
+
         ColumnConstraints col3 = new ColumnConstraints();
         mainBox.getColumnConstraints().addAll(col1,col2,col3);
-
+        waterQuantityControl.setPadding(new Insets(8, 0, 200, 0));
 
         mainBox.add(fieldName,               0, 0);
         mainBox.add(fieldType,               2, 0);
@@ -92,6 +102,7 @@ public class SpecViewText extends VBox implements ViewMixin {
         mainBox.add(fieldCanton,             2, 1);
 
         mainBox.add(fieldWaterVolume,        0, 2);
+        mainBox.add(waterQuantityControl,    1, 2);
         mainBox.add(fieldPerformance,        2, 2);
 
         mainBox.add(fieldFirstCommissioning, 0, 3);
@@ -122,8 +133,8 @@ public class SpecViewText extends VBox implements ViewMixin {
         fieldType.getTextField().textProperty().bindBidirectional(               rootPM.typeProperty()                                            );
         fieldLocation.getTextField().textProperty().bindBidirectional(           rootPM.locationProperty()                                        );
         fieldCanton.getTextField().textProperty().bindBidirectional(             rootPM.cantonProperty()                                          );
-        fieldWaterVolume.getTextField().textProperty().bindBidirectional(        rootPM.waterVolumeProperty(), new NumberStringConverter()        );
-        fieldPerformance.getTextField().textProperty().bindBidirectional(        rootPM.performanceProperty(), new NumberStringConverter()        );
+        fieldWaterVolume.getTextField().textProperty().bindBidirectional(        rootPM.waterVolumeProperty(), new NumberStringConverter("#######.##")        );
+        fieldPerformance.getTextField().textProperty().bindBidirectional(        rootPM.performanceProperty(), new NumberStringConverter("#######.##")        );
         fieldFirstCommissioning.getTextField().textProperty().bindBidirectional( rootPM.firstCommissioningProperty(), new NumberStringConverter(Locale.GERMAN, "#####") );
         fieldLastCommissioning.getTextField().textProperty().bindBidirectional(  rootPM.lastCommissioningProperty(), new NumberStringConverter(Locale.GERMAN, "#####")  );
         fieldDegreeOfLatitude.getTextField().textProperty().bindBidirectional(   rootPM.degreeOfLatitudeProperty(), new NumberStringConverter()   );
@@ -132,14 +143,14 @@ public class SpecViewText extends VBox implements ViewMixin {
         fieldUsedWaters.getTextField().textProperty().bindBidirectional(         rootPM.usedWatersProperty()                                      );
         fieldImageUrl.getTextField().textProperty().bindBidirectional(           rootPM.imageUrlProperty()                                        );
 
-        fieldName.getTextField().textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(newValue.isEmpty()) {
-                    fieldName.getTextField().requestFocus();
-                }
-            }
+        fieldName.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue.isEmpty()) fieldName.getTextField().requestFocus();
         });
+
+        ////// WaterQuantityControl //////
+        // Bind presentation model to the water control
+        waterQuantityControl.valueProperty().bind(rootPM.waterVolumeProperty());
+        //////////////////////////////////
     }
 
 }
